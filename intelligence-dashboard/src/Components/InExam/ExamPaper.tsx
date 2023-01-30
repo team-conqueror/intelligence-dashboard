@@ -1,15 +1,25 @@
 import React from "react";
 import {Container, Row, Col, Button, Card} from "react-bootstrap";
 import {FormGroup, FormControlLabel, RadioGroup, FormControl, FormLabel, Radio} from "@mui/material";
+import {examQuestionsSample} from "../../Repository/ExamQuestions/ExamQuestionsSample";
 
 const ExamPaper:React.FC = () =>{
     const buttons:number[] = [1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,
     21,22,23,24,25,26,27,28,29,30,31,32,33,34,35,36,37,38,39,40];
+    const currentQuestionNumber:number = 1;
     const renderButtons = () => {
         return buttons.map(btnnumber => {
             return <Col sm={3}>
                 <Button variant="outline-primary mt-5">{btnnumber}</Button>
             </Col>
+        })
+    }
+    const renderQuestions = () => {
+        return examQuestionsSample.map(onequestion => {
+            if(onequestion.index == 1){
+                return <>{onequestion.Question}</>
+            }
+            return <></>
         })
     }
     return(
@@ -26,12 +36,7 @@ const ExamPaper:React.FC = () =>{
                             <Card className="shadow-sm">
                                 <Card.Body>
                                     <header>Question 01</header>
-                                    Lorem ipsumLorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod
-                                    tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis
-                                    nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.
-                                    Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu
-                                    fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in
-                                    culpa qui officia deserunt mollit anim id est laborum.
+                                    {renderQuestions()}
                                 </Card.Body>
                             </Card>
                             <Card className="shadow-sm mt-5">

@@ -1,14 +1,13 @@
 import React from 'react';
 import './App.css';
+import './Assets/Styles/_main.scss';
 import 'bootstrap/dist/css/bootstrap.min.css';
-import Navigationbar from "./Components/Common/Navigationbar";
-import ExamPaper from "./Components/InExam/ExamPaper";
+import ExamDetailsDashboard from "./Components/InExam/ExamDetails/ExamDetailsDashboard";
 
 function App() {
     return (
         <div className="App m-0 p-0 bg-light">
-            <Navigationbar/>
-            <ExamPaper/>
+            <ExamDetailsDashboard/>
         </div>
     );
 }
