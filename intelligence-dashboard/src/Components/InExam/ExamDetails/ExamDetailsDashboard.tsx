@@ -1,6 +1,9 @@
 import React from "react";
 import {Card, Col, Container, Nav, Row} from "react-bootstrap";
+import * as Icon from "react-bootstrap-icons";
 import Navigationbar from "../../Common/Navigationbar";
+import {Avatar, Stack} from "@mui/material";
+import {deepOrange, deepPurple, lightBlue, lightGreen, orange, red, yellow} from "@mui/material/colors";
 
 const ExamDetailsDashboard:React.FC = () => {
     return (
@@ -58,32 +61,128 @@ const ExamDetailsDashboard:React.FC = () => {
                                 <Row className="pt-4">
                                     <Col xs={4}>
                                         <Card className="mt-2 p-3">
-                                            <Card.Text>Hello world</Card.Text>
+                                            <Card.Text>
+                                                <Row>
+                                                    <Col xs={3}>
+                                                        <Avatar sx={{bgcolor: lightBlue[200]}} >
+                                                            <Icon.Person className="text-primary"/>
+                                                        </Avatar>
+                                                    </Col>
+                                                    <Col xs={9}>
+                                                        <Row className="justify-content-start">
+                                                            <Col xs={12} className="text-start">H</Col>
+                                                            <Col xs={12} className="text-start">G</Col>
+                                                        </Row>
+                                                    </Col>
+                                                </Row>
+                                            </Card.Text>
                                         </Card>
                                     </Col>
                                     <Col xs={4}>
                                         <Card className="mt-2 p-3">
-                                            <Card.Text>Hello world</Card.Text>
+                                            <Card.Text>
+
+                                                <Row>
+                                                    <Col xs={3}>
+                                                        <Avatar sx={{bgcolor: lightGreen[200]}} >
+                                                            <Icon.Star className="text-success"/>
+                                                        </Avatar>
+                                                    </Col>
+                                                    <Col xs={9}>
+                                                        <Row className="justify-content-start">
+                                                            <Col xs={12} className="text-start">H</Col>
+                                                            <Col xs={12} className="text-start">G</Col>
+                                                        </Row>
+                                                    </Col>
+                                                </Row>
+                                            </Card.Text>
                                         </Card>
                                     </Col>
                                     <Col xs={4}>
                                         <Card className="mt-2 p-3">
-                                            <Card.Text>Hello world</Card.Text>
+                                            <Card.Text>
+                                                <Card.Text>
+                                                    <Row>
+                                                        <Col xs={3}>
+                                                            <Avatar sx={{bgcolor: orange[200]}} >
+                                                                <Icon.CheckCircle className="text-danger"/>
+                                                            </Avatar>
+                                                        </Col>
+                                                        <Col xs={9}>
+                                                            <Row className="justify-content-start">
+                                                                <Col xs={12} className="text-start">H</Col>
+                                                                <Col xs={12} className="text-start">G</Col>
+                                                            </Row>
+                                                        </Col>
+                                                    </Row>
+                                                </Card.Text>
+                                            </Card.Text>
                                         </Card>
                                     </Col>
                                     <Col xs={4}>
                                         <Card className="mt-2 p-3">
-                                            <Card.Text>Hello world</Card.Text>
+                                            <Card.Text>
+                                                <Card.Text>
+
+                                                    <Row>
+                                                        <Col xs={3}>
+                                                            <Avatar sx={{bgcolor: deepPurple[200]}} >
+                                                                <Icon.CheckCircle className="text-primary"/>
+                                                            </Avatar>
+                                                        </Col>
+                                                        <Col xs={9}>
+                                                            <Row className="justify-content-start">
+                                                                <Col xs={12} className="text-start">H</Col>
+                                                                <Col xs={12} className="text-start">G</Col>
+                                                            </Row>
+                                                        </Col>
+                                                    </Row>
+                                                </Card.Text>
+                                            </Card.Text>
                                         </Card>
                                     </Col>
                                     <Col xs={4}>
                                         <Card className="mt-2 p-3">
-                                            <Card.Text>Hello world</Card.Text>
+                                            <Card.Text>
+                                                <Card.Text>
+
+                                                    <Row>
+                                                        <Col xs={3}>
+                                                            <Avatar sx={{bgcolor: yellow[200]}} >
+                                                                <Icon.Flag className="text-warning"/>
+                                                            </Avatar>
+                                                        </Col>
+                                                        <Col xs={9}>
+                                                            <Row className="justify-content-start">
+                                                                <Col xs={12} className="text-start">H</Col>
+                                                                <Col xs={12} className="text-start">G</Col>
+                                                            </Row>
+                                                        </Col>
+                                                    </Row>
+                                                </Card.Text>
+                                            </Card.Text>
                                         </Card>
                                     </Col>
                                     <Col xs={4}>
                                         <Card className="mt-2 p-3">
-                                            <Card.Text>Hello world</Card.Text>
+                                            <Card.Text>
+                                                <Card.Text className="text-danger">
+
+                                                    <Row>
+                                                        <Col xs={3}>
+                                                            <Avatar sx={{bgcolor: red[200]}} >
+                                                                <Icon.XCircle className="text-danger"/>
+                                                            </Avatar>
+                                                        </Col>
+                                                        <Col xs={9}>
+                                                            <Row className="justify-content-start">
+                                                                <Col xs={12} className="text-start">H</Col>
+                                                                <Col xs={12} className="text-start">G</Col>
+                                                            </Row>
+                                                        </Col>
+                                                    </Row>
+                                                </Card.Text>
+                                            </Card.Text>
                                         </Card>
                                     </Col>
                                 </Row>
