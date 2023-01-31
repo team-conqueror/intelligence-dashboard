@@ -8,18 +8,16 @@ const HomepageTest:React.FC = () => {
                 <Navbar.Brand href="#home">React-Bootstrap</Navbar.Brand>
                 <Navbar.Toggle aria-controls="basic-navbar-nav" />
                 <Navbar.Collapse id="basic-navbar-nav">
-                    <Nav className="me-auto">
-                        <Nav.Link href="#home">Home</Nav.Link>
-                        <Nav.Link href="#link">Link</Nav.Link>
-                        <NavDropdown title="Dropdown" id="basic-nav-dropdown">
-                            <NavDropdown.Item href="#action/3.1">Action</NavDropdown.Item>
-                            <NavDropdown.Item href="#action/3.2">
-                                Another action
-                            </NavDropdown.Item>
-                            <NavDropdown.Item href="#action/3.3">Something</NavDropdown.Item>
-                            <NavDropdown.Divider />
-                            <NavDropdown.Item href="#action/3.4">
-                                Separated link
+                    <Nav className="ms-auto">
+
+                        <Nav.Link href="#link">Results</Nav.Link>
+                        <Nav.Link href="/exampaper">Paper</Nav.Link>
+                        <Nav.Link href="examdetails">Exam Details</Nav.Link>
+                        <Nav.Link href="#link">Add Exam</Nav.Link>
+                        <NavDropdown title="Exam Dashboard" id="basic-nav-dropdown">
+                            <NavDropdown.Item href="/studentdashboard">Student</NavDropdown.Item>
+                            <NavDropdown.Item href="/teacherdashboard">
+                                Teacher
                             </NavDropdown.Item>
                         </NavDropdown>
                     </Nav>

@@ -5,6 +5,8 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 import ExamDetailsDashboard from "./Components/InExam/ExamDetails/ExamDetailsDashboard";
 import HomepageTest from "./Components/Common/HomepageTest";
 import {BrowserRouter, Routes, Route} from "react-router-dom";
+import ExamDashboard from "./Components/InExam/ExamDashboard/ExamDashboard";
+import ExamPaper from "./Components/InExam/ExamPaper";
 
 function App() {
     return (
@@ -12,8 +14,9 @@ function App() {
             <Routes>
                 <Route path="/" element={<HomepageTest/>} />
                 <Route path="/examdetails" element={<ExamDetailsDashboard/>}/>
-                <Route path="/studentdashboard"/>
-                <Route path="/teacherdashboard"/>
+                <Route path="/studentdashboard" element={<ExamDashboard/>} />
+                <Route path="/teacherdashboard" element={<ExamDashboard/>}/>
+                <Route path="/exampaper" element={<ExamPaper/>}/>
                 <Route path="/examresult"/>
             </Routes>
         </BrowserRouter>
