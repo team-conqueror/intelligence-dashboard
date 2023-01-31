@@ -1,3 +1,14 @@
 @import "~bootstrap/scss/bootstrap";
 
 @import "ExamDeailsDashboard/_examDetailsDashboard.scss";
+
+@import "ExamResult/_result.scss";
+
+@import "Values/_variables.scss";
+
+.text-purple{
+  color: #b059d9;
+}
+.bg-light-grey{
+  background-color: #f2f2f2;
+}

@@ -7,6 +7,7 @@ import HomepageTest from "./Components/Common/HomepageTest";
 import {BrowserRouter, Routes, Route} from "react-router-dom";
 import ExamDashboard from "./Components/InExam/ExamDashboard/ExamDashboard";
 import ExamPaper from "./Components/InExam/ExamPaper";
+import ExamResultComponent from "./Components/ExamResult/ExamResultComponent";
 
 function App() {
     return (
@@ -17,7 +18,7 @@ function App() {
                 <Route path="/studentdashboard" element={<ExamDashboard/>} />
                 <Route path="/teacherdashboard" element={<ExamDashboard/>}/>
                 <Route path="/exampaper" element={<ExamPaper/>}/>
-                <Route path="/examresult"/>
+                <Route path="/examresult" element={<ExamResultComponent/>}/>
             </Routes>
         </BrowserRouter>
     );

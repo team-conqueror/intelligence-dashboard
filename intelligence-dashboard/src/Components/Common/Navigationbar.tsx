@@ -5,9 +5,9 @@ import * as Icon from "react-bootstrap-icons";
 const Navigationbar:React.FC = () => {
     return(
         <Navbar bg="light" expand="lg">
-            <Container>
+            <Container fluid={true}>
                 <Navbar.Brand href="#home">
-                    <Container className="text-dark">
+                    <Container className="text-purple">
                         <Icon.CircleFill/>{" "}
                         THE SCRUTINIZER</Container>
                 </Navbar.Brand>

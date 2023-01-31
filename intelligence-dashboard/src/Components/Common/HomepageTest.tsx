@@ -10,9 +10,9 @@ const HomepageTest:React.FC = () => {
                 <Navbar.Collapse id="basic-navbar-nav">
                     <Nav className="ms-auto">
 
-                        <Nav.Link href="#link">Results</Nav.Link>
+                        <Nav.Link href="/examresult">Results</Nav.Link>
                         <Nav.Link href="/exampaper">Paper</Nav.Link>
-                        <Nav.Link href="examdetails">Exam Details</Nav.Link>
+                        <Nav.Link href="/examdetails">Exam Details</Nav.Link>
                         <Nav.Link href="#link">Add Exam</Nav.Link>
                         <NavDropdown title="Exam Dashboard" id="basic-nav-dropdown">
                             <NavDropdown.Item href="/studentdashboard">Student</NavDropdown.Item>

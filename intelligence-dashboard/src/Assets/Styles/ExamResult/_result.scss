@@ -1,0 +1,42 @@
+.vertical-menu {
+
+  background-color: transparent !important;
+  box-shadow: none !important;
+  width: 55%;
+
+  .menu-item {
+    vertical-align: middle;
+
+    border-left: 6px solid transparent;
+
+    .v-nav-icon {
+      color: black;
+      height: 16px;
+      vertical-align: middle;
+    }
+
+  }
+
+  .menu-item-selected {
+    background-color: #f1f1f1;
+    color:  #b059d9;
+    font-weight: bold;
+
+    border-left: 6px solid  #b059d9;
+
+    .v-nav-icon-selected {
+      color:  #b059d9;
+      height: 16px;
+      vertical-align: middle;
+    }
+
+    .menu-item-selected-start {
+      background-color:  #b059d9;
+      width: 10px;
+      height: 100px;
+    }
+
+  }
+
+
+}
