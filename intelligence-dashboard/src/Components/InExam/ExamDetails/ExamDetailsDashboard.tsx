@@ -4,8 +4,24 @@ import * as Icon from "react-bootstrap-icons";
 import Navigationbar from "../../Common/Navigationbar";
 import {Avatar, Stack} from "@mui/material";
 import {deepOrange, deepPurple, lightBlue, lightGreen, orange, red, yellow} from "@mui/material/colors";
+import {ExamStudentsSample} from "../../../Repository/ExamQuestions/ExamStudentsSample";
+import SingleStudentDetail from "./SingleStudentDetail";
 
 const ExamDetailsDashboard:React.FC = () => {
+
+    const renderStudents = () =>{
+        return ExamStudentsSample.map(student => {
+            return <SingleStudentDetail
+                name={student.name}
+                examStatus={student.examStatus}
+                score={student.score}
+                grade={student.grade}
+                timeSpent={student.timeSpent}
+                submittedTime={student.submittedTime}
+                details={student.details}/>
+        })
+    }
+
     return (
         <Container className=" exam-details-dashboard" fluid={true}>
             <Row>
@@ -186,7 +202,18 @@ const ExamDetailsDashboard:React.FC = () => {
                                         </Card>
                                     </Col>
                                 </Row>
+
                             </Card>
+                            <Row className="pt-3 pb-2">
+                                <Col xs={2}>Student Name</Col>
+                                <Col xs={1}>Passed/failed</Col>
+                                <Col xs={1}>Score</Col>
+                                <Col xs={1}>Grade</Col>
+                                <Col xs={2}>Time Spent</Col>
+                                <Col xs={2}>Submitted Time</Col>
+                                <Col xs={2}>Details</Col>
+                            </Row>
+                            <Row>{renderStudents()}</Row>
                         </Col>
                     </Row>
                 </Col>
