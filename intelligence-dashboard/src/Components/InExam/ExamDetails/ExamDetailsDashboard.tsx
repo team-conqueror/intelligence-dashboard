@@ -1,11 +1,14 @@
 import React from "react";
-import {Card, Col, Container, Nav, Row} from "react-bootstrap";
+import {Alert, Button, Card, Col, Container, Nav, Row} from "react-bootstrap";
 import * as Icon from "react-bootstrap-icons";
 import Navigationbar from "../../Common/Navigationbar";
-import {Avatar, Stack} from "@mui/material";
-import {deepOrange, deepPurple, lightBlue, lightGreen, orange, red, yellow} from "@mui/material/colors";
+import {Avatar} from "@mui/material";
+import {deepPurple, lightBlue, lightGreen, orange, red, yellow} from "@mui/material/colors";
 import {ExamStudentsSample} from "../../../Repository/ExamQuestions/ExamStudentsSample";
 import SingleStudentDetail from "./SingleStudentDetail";
+import SearchArea from "../../SearchArea/SearchArea";
+import ExamDashboardItem from "./ExamDashboardItem";
+import {eExamDetailsIcons} from "../../../Types/ExamDetailsDashboardType";
 
 const ExamDetailsDashboard:React.FC = () => {
 
@@ -31,17 +34,18 @@ const ExamDetailsDashboard:React.FC = () => {
                 <Col xs={3} className="bg-light shadow-sm">
                     <Nav defaultActiveKey="/home" className="flex-column m-5" >
                         <h4 className="text-start">Menu</h4>
-                        <Nav.Link href="/home" className="text-start" >Active</Nav.Link>
-                        <Nav.Link eventKey="link-1" className="text-start" >Link</Nav.Link>
-                        <Nav.Link eventKey="link-2" className="text-start" >Link</Nav.Link>
-                        <Nav.Link eventKey="link-2" className="text-start" >Link</Nav.Link>
+                        <Nav.Link href="/examdetails" className="text-start text-dark" >Courses</Nav.Link>
+                        <Nav.Link eventKey="/examdetails" className="text-start text-dark" >Course Subscription</Nav.Link>
+                        <Nav.Link eventKey="/examdetails" className="text-start text-dark" >Students</Nav.Link>
+                        <Nav.Link eventKey="/examdetails" className="text-start text-dark" >Private Groups</Nav.Link>
+                        <Nav.Link eventKey="/examdetails" className="text-start text-dark" >Settings</Nav.Link>
                     </Nav>
                 </Col>
                 <Col xs={9} className="p-0">
                     <Row className="p-0 m-0">
-                        <Col xs={12} className="p-0">
-                            <Container className="bg-secondary p-3 m-0 text-light">
-                                <h3>Search</h3>
+                        <Col xs={12} className="">
+                            <Container className="p-4 mt-1 bg-light text-light">
+                                <SearchArea/>
                             </Container>
                         </Col>
                         <Col xs={12} className="pt-3">
@@ -86,8 +90,8 @@ const ExamDetailsDashboard:React.FC = () => {
                                                     </Col>
                                                     <Col xs={9}>
                                                         <Row className="justify-content-start">
-                                                            <Col xs={12} className="text-start">H</Col>
-                                                            <Col xs={12} className="text-start">G</Col>
+                                                            <Col xs={12} className="text-start">total students</Col>
+                                                            <Col xs={12} className="text-start">48</Col>
                                                         </Row>
                                                     </Col>
                                                 </Row>
@@ -106,8 +110,8 @@ const ExamDetailsDashboard:React.FC = () => {
                                                     </Col>
                                                     <Col xs={9}>
                                                         <Row className="justify-content-start">
-                                                            <Col xs={12} className="text-start">H</Col>
-                                                            <Col xs={12} className="text-start">G</Col>
+                                                            <Col xs={12} className="text-start">total students</Col>
+                                                            <Col xs={12} className="text-start">48</Col>
                                                         </Row>
                                                     </Col>
                                                 </Row>
@@ -204,6 +208,23 @@ const ExamDetailsDashboard:React.FC = () => {
                                 </Row>
 
                             </Card>
+                            <Alert className="mt-4" variant="warning" >
+
+                                <Row>
+                                    <Col xs={6} className="text-start">
+                                        <Icon.QuestionCircle className="text-warning" />{'  '}
+                                        exam results are not submitted yet
+                                    </Col>
+                                    <Col xs={6} className="text-end">
+                                        <Button variant="outline-primary bg-light" className="me-3" >
+                                            Publish without feedback
+                                        </Button>
+                                        <Button variant="outline-primary bg-light" className="me-3">
+                                            Publish with feedback
+                                        </Button>
+                                    </Col>
+                                </Row>
+                                                            </Alert>
                             <Row className="pt-3 pb-2">
                                 <Col xs={2}>Student Name</Col>
                                 <Col xs={1}>Passed/failed</Col>

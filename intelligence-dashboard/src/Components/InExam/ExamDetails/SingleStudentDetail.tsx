@@ -6,14 +6,23 @@ import {eExamStatus} from "../../../Types/ExamStudentDetailsType";
 
 const SingleStudentDetail:React.FC<examStudentDetailsType> = (props) => {
 
-    const renderGrade = () => {
-            if(props.examStatus == eExamStatus.passed){
+    const renderStatus = () => {
+            if(props.examStatus === eExamStatus.passed){
                 return <p className="text-success">{props.examStatus}</p>;
             }else if(props.examStatus == eExamStatus.absent){
                 return <p className="text-warning">{props.examStatus}</p>
             }else{
                 return <p className="text-danger">{props.examStatus}</p>;
             }
+    }
+    const renderGrade = () => {
+        if(props.examStatus === eExamStatus.passed){
+            return <p className="text-success">{props.grade}</p>;
+        }else if(props.examStatus == eExamStatus.absent){
+            return <p className="text-warning">{props.grade}</p>
+        }else{
+            return <p className="text-danger">{props.grade}</p>;
+        }
     }
 
     return(
@@ -24,7 +33,7 @@ const SingleStudentDetail:React.FC<examStudentDetailsType> = (props) => {
                         <Icon.PersonCircle/>{" "}
                         {props.name}
                     </Col>
-                    <Col xs={1}>{props.examStatus}</Col>
+                    <Col xs={1}>{renderStatus()}</Col>
                     <Col xs={1}>{props.score}</Col>
                     <Col xs={1}>{renderGrade()}</Col>
                     <Col xs={2}>{props.timeSpent}</Col>
