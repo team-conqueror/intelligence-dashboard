@@ -2,6 +2,7 @@ import React from "react";
 import {Button, Card, Col, Row} from "react-bootstrap";
 import {useForm, Controller} from "react-hook-form";
 import { Checkbox, Input } from "@material-ui/core";
+import Select from "react-select";
 import * as Icon from "react-bootstrap-icons";
 
 import { Input as AntdInput } from "antd";
@@ -16,6 +17,7 @@ export type IMcqQuestion = {
     answer2: string
     answer3: string
     answer4: string
+    correctAnswer: string
 }
 
 const AddMCQQuestion:React.FC<ISingleMcqQuestion> = (props) => {
@@ -69,6 +71,25 @@ const AddMCQQuestion:React.FC<ISingleMcqQuestion> = (props) => {
                         <Controller
                             render={({ field }) => <Input {...field} />}
                             name="answer4"
+                            control={control}
+                            defaultValue=""
+                        />
+                    </Col>
+                    <Col xs={6} className="mt-4">
+                        <label>Correct Answer</label>
+                        <Controller
+                            name="correctAnswer"
+                            render={({ field }) => (
+                                <Select
+                                    {...field}
+                                    options={[
+                                        { value: "1", label: "1" },
+                                        { value: "2", label: "2" },
+                                        { value: "3", label: "3" },
+                                        { value: "4", label: "4" }
+                                    ]}
+                                />
+                            )}
                             control={control}
                             defaultValue=""
                         />
