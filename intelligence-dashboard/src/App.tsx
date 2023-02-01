@@ -1,26 +1,32 @@
 import React from 'react';
-import logo from './logo.svg';
 import './App.css';
+import './Assets/Styles/_main.scss';
+import 'bootstrap/dist/css/bootstrap.min.css';
+import ExamDetailsDashboard from "./Components/InExam/ExamDetails/ExamDetailsDashboard";
+import HomepageTest from "./Components/Common/HomepageTest";
+import {BrowserRouter, Routes, Route} from "react-router-dom";
+import ExamDashboard from "./Components/InExam/ExamDashboard/ExamDashboard";
+import ExamPaper from "./Components/InExam/ExamPaper";
+import ExamResultComponent from "./Components/ExamResult/ExamResultComponent";
+import AddExamHome, {IExam} from "./Components/InExam/AddExam/AddExamHome";
 
 function App() {
-  return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.tsx</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
-  );
+    const testFunc = (hello:number) => {
+        console.log(hello);
+    }
+    return (
+        <BrowserRouter>
+            <Routes>
+                <Route path="/" element={<HomepageTest/>} />
+                <Route path="/examdetails" element={<ExamDetailsDashboard/>}/>
+                <Route path="/studentdashboard" element={<ExamDashboard/>} />
+                <Route path="/teacherdashboard" element={<ExamDashboard/>}/>
+                <Route path="/exampaper" element={<ExamPaper/>}/>
+                <Route path="/examresult" element={<ExamResultComponent/>}/>
+                <Route path="/addexam" element={<AddExamHome testFunction={testFunc}/>} />
+            </Routes>
+        </BrowserRouter>
+    );
 }
 
 export default App;
