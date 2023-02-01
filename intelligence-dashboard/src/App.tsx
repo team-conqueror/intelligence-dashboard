@@ -8,8 +8,12 @@ import {BrowserRouter, Routes, Route} from "react-router-dom";
 import ExamDashboard from "./Components/InExam/ExamDashboard/ExamDashboard";
 import ExamPaper from "./Components/InExam/ExamPaper";
 import ExamResultComponent from "./Components/ExamResult/ExamResultComponent";
+import AddExamHome, {IExam} from "./Components/InExam/AddExam/AddExamHome";
 
 function App() {
+    const testFunc = (hello:number) => {
+        console.log(hello);
+    }
     return (
         <BrowserRouter>
             <Routes>
@@ -19,6 +23,7 @@ function App() {
                 <Route path="/teacherdashboard" element={<ExamDashboard/>}/>
                 <Route path="/exampaper" element={<ExamPaper/>}/>
                 <Route path="/examresult" element={<ExamResultComponent/>}/>
+                <Route path="/addexam" element={<AddExamHome testFunction={testFunc}/>} />
             </Routes>
         </BrowserRouter>
     );

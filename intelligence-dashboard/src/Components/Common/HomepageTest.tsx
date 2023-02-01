@@ -13,7 +13,7 @@ const HomepageTest:React.FC = () => {
                         <Nav.Link href="/examresult">Results</Nav.Link>
                         <Nav.Link href="/exampaper">Paper</Nav.Link>
                         <Nav.Link href="/examdetails">Exam Details</Nav.Link>
-                        <Nav.Link href="#link">Add Exam</Nav.Link>
+                        <Nav.Link href="/addexam">Add Exam</Nav.Link>
                         <NavDropdown title="Exam Dashboard" id="basic-nav-dropdown">
                             <NavDropdown.Item href="/studentdashboard">Student</NavDropdown.Item>
                             <NavDropdown.Item href="/teacherdashboard">
