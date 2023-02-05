@@ -1,5 +1,5 @@
-import React from "react";
-import {Button, Card, Col, Row} from "react-bootstrap";
+import React, {useState} from "react";
+import {Button, Card, Col, Row,Form} from "react-bootstrap";
 import {useForm, Controller} from "react-hook-form";
 import { Checkbox, Input } from "@material-ui/core";
 import Select from "react-select";
@@ -21,6 +21,12 @@ export type IMcqQuestion = {
 }
 
 const AddMCQQuestion:React.FC<ISingleMcqQuestion> = (props) => {
+    const [question, setQuestion] = useState('');
+    const [answerOne, setAnswerOne] = useState('');
+    const [answerTwo, setAnswerTwo] = useState('');
+    const [answerThree, setAnswerThree] = useState('');
+    const [answerFour, setAnswerFour] = useState('');
+    const [correctAnswer, setCorrectAnswer] = useState('');
 
     const { register, handleSubmit, watch, formState: {errors} , control } = useForm();
     const onSubmit = (data: any) => {
@@ -30,74 +36,82 @@ const AddMCQQuestion:React.FC<ISingleMcqQuestion> = (props) => {
     return(
         <Card className="p-5 mt-5 shadow-sm">
 
-            <form onSubmit={handleSubmit(onSubmit)}>
-                <label>Question</label>
-                <Controller
-                    render={({ field }) => <Input {...field} />}
-                    name="question"
-                    control={control}
-                    defaultValue=""
-                />
+            <Form>
+                <Form.Group className="mb-3">
+                    <Form.Label>Question</Form.Label>
+                    <Form.Control placeholder="Enter Question"
+                        onChange={(e) => setQuestion(e.target.value)}
+                    />
+                </Form.Group>
                 <Row className="mt-5">
                     <Col xs={6}>
-                        <label>Answer 1:</label>
-                        <Controller
-                            render={({ field }) => <Input {...field} />}
-                            name="answer1"
-                            control={control}
-                            defaultValue=""
-                        />
+                        <Form.Group className="mb-3">
+                            <Form.Label>Answer 1: </Form.Label>
+                            <Form.Control placeholder="enter answer one"
+                                          onChange={(e) =>
+                                              setAnswerOne(e.target.value)}
+                            />
+                        </Form.Group>
                     </Col>
                     <Col xs={6}>
-                        <label>Answer 2:</label>
-                        <Controller
-                            render={({ field }) => <Input {...field} />}
-                            name="answer2"
-                            control={control}
-                            defaultValue=""
-                        />
+                        <Form.Group className="mb-3">
+                            <Form.Label>Answer 2: </Form.Label>
+                            <Form.Control placeholder="enter answer two"
+                                          onChange={(e) =>
+                                              setAnswerTwo(e.target.value)}
+                            />
+                        </Form.Group>
                     </Col>
                     <Col xs={6}>
-                        <label>Answer 3:</label>
-                        <Controller
-                            render={({ field }) => <Input {...field} />}
-                            name="answer3"
-                            control={control}
-                            defaultValue=""
-                        />
+                        <Form.Group className="mb-3">
+                            <Form.Label>Answer 3: </Form.Label>
+                            <Form.Control placeholder="enter answer three"
+                                          onChange={(e) =>
+                                              setAnswerThree(e.target.value)}
+                            />
+                        </Form.Group>
                     </Col>
                     <Col xs={6}>
-                        <label>Answer 4:</label>
-                        <Controller
-                            render={({ field }) => <Input {...field} />}
-                            name="answer4"
-                            control={control}
-                            defaultValue=""
-                        />
+                        <Form.Group className="mb-3">
+                            <Form.Label>Answer 4: </Form.Label>
+                            <Form.Control placeholder="enter answer four"
+                                          onChange={(e) =>
+                                              setAnswerFour(e.target.value)}
+                            />
+                        </Form.Group>
                     </Col>
                     <Col xs={6} className="mt-4">
                         <label>Correct Answer</label>
-                        <Controller
-                            name="correctAnswer"
-                            render={({ field }) => (
-                                <Select
-                                    {...field}
-                                    options={[
-                                        { value: "1", label: "1" },
-                                        { value: "2", label: "2" },
-                                        { value: "3", label: "3" },
-                                        { value: "4", label: "4" }
-                                    ]}
-                                />
-                            )}
-                            control={control}
-                            defaultValue=""
-                        />
+                        <Form.Group className="mb-3">
+                            <Form.Label>Answer 1: </Form.Label>
+                            <Form.Select aria-label="Default select example"
+                                onChange={(e)=>
+                                    setCorrectAnswer(e.target.value)
+                                }
+                            >
+                                <option>Open this to select answer</option>
+                                <option value="1">one</option>
+                                <option value="2">two</option>
+                                <option value="3">three</option>
+                                <option value="4">four</option>
+                            </Form.Select>
+                        </Form.Group>
+
                     </Col>
                 </Row>
-
-                <AntdInput type="submit" className="mt-4 w-25" value="Add This Question"/>
-            </form>
+                <Button onClick={()=>{
+                    props.addQuestion({question: question,
+                        correctAnswer: correctAnswer,
+                        answer2: answerTwo,
+                        answer1: answerOne,
+                        answer3: answerThree,
+                        answer4: answerFour
+                    })
+                }} >
+                    Add this question
+                </Button>
+                {/*<AntdInput type="submit" className="mt-4 w-25" value="Add This Question"/>*/}
+            </Form>
         </Card>
     )
 }

@@ -5,41 +5,126 @@ import {examQuestionsSample} from "../../Repository/ExamQuestions/ExamQuestionsS
 import Navigationbar from "../Common/Navigationbar";
 import ExamQuestionButtonComponent from "./ExamPaper/ExamQuestionButtonComponent";
 import {eQuestShadow} from "../../Types/ExamQuestionButtonType";
+import {Controller, useForm} from "react-hook-form";
+import {Input} from "@material-ui/core";
+import Select from "react-select";
+import {Input as AntdInput} from "antd";
+import {IStudentAnswers} from "../../Types/Questions";
 
-const ExamPaper:React.FC = () =>{
-    const buttons:number[] = [1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,
-    21,22,23,24,25,26,27,28,29,30,31,32,33,34,35,36,37,38,39,40];
+const ExamPaper:React.FC = (props) =>{
     const currentQuestionNumber:number = 1;
+    const studentAnswerList:IStudentAnswers[] = [];
+    const testInt:number[] = [];
 
-    const[number, setNumber] = useState<number>();
 
-    const handleOnBtnClick = () =>{
-        console.log("Clicked");
+    const { register, handleSubmit, watch, formState: {errors} , control } = useForm();
+
+    const [answers, setAnswers] = useState<IStudentAnswers[]>([]);
+
+    const onSubmit = (data: any) => {
+        const TempAnswer:IStudentAnswers = {
+            questionNmbr: qnumber.toString(),
+            answer: data.correctAnswer.value
+        };
+        setAnswers(prevAnswers => [...prevAnswers, TempAnswer]);
+        console.log(answers);
+    };
+
+    const[qnumber, setQnumber] = useState<number>(1);
+
+    const handleOnBtnClick = (data: any) =>{
+        console.log(data);
+        setQnumber(data);
     }
 
     const renderButtons = () => {
-        return buttons.map(btnnumber => {
-            return <Col sm={3}>
-                {/*<Button variant="outline-primary mt-5">{btnnumber}</Button>*/}
-                <ExamQuestionButtonComponent
-                    questionNumber={btnnumber}
-                    questionShadow={eQuestShadow.off}
-                    setOnButtonClick={handleOnBtnClick}
-                />
-            </Col>
+        return examQuestionsSample.map(questions => {
+          return <Col sm={3}>
+              <ExamQuestionButtonComponent
+                  questionNumber={questions.index}
+                  questionShadow={qnumber === questions.index ? eQuestShadow.on : eQuestShadow.off}
+                  setOnButtonClick={handleOnBtnClick}
+                  />
+          </Col>
         })
     }
     const renderQuestions = () => {
         return examQuestionsSample.map(onequestion => {
-            if(onequestion.index == 1){
+            if(onequestion.index == qnumber){
                 return <>{onequestion.Question}</>
             }
             return <></>
         })
     }
+    const handleOnEndExam = () => {
+        console.log(answers);
+    }
+    const SelectionValidity = () => {
+        var foundQ:boolean = false;
+        var tempAns: string = "";
+        answers.map(answer => {
+            if(qnumber.toString() == answer.questionNmbr){
+                foundQ = true;
+                tempAns = answer.answer;
+            }
+        })
+        if(foundQ){
+            return(
+                <Button disabled>Submitted {tempAns} </Button>
+            )
+        }else{
+            return (
+                <form onSubmit={handleSubmit(onSubmit)}>
+                    <label>Correct Answer</label>
+
+                    <Controller
+                        name="correctAnswer"
+                        render={({ field }) => (
+                            <Select
+                                {...field}
+                                options={[
+                                    { value: "1", label: "1" },
+                                    { value: "2", label: "2" },
+                                    { value: "3", label: "3" },
+                                    { value: "4", label: "4" }
+                                ]}
+                            />
+                        )}
+                        control={control}
+                        defaultValue="1"
+                    />
+                    <AntdInput
+                        type="submit"
+                        className="mt-4"
+                        value="Submit"/>
+                </form>
+            );
+        }
+    }
+    const renderAnswers = () => {
+        return examQuestionsSample.map(onequestion => {
+            if(onequestion.index === qnumber){
+                return (<Row>
+                    <Col xs={12}>
+                        1. {onequestion.Answers.answer_one}
+                    </Col>
+                    <Col xs={12}>
+                        2. {onequestion.Answers.answer_two}
+                    </Col>
+                    <Col xs={12}>
+                        3. {onequestion.Answers.answer_three}
+                    </Col>
+                    <Col xs={12}>
+                        4. {onequestion.Answers.answer_four}
+                    </Col>
+                </Row>)
+            }
+        })
+    }
     return(
         <Container fluid={true}>
             <Navigationbar/>
+            <Button>{qnumber}</Button>
             <Row className="justify-content-center bg-light-grey" >
                 <Col xs={8}>
                     <Row className="justify-content-md-end ">
@@ -53,35 +138,14 @@ const ExamPaper:React.FC = () =>{
                                 <Col sm={12}>
                                     <Card className="shadow-sm">
                                         <Card.Body>
-                                            <header>Question 01</header>
+                                            <header>Question {qnumber}</header>
                                             {renderQuestions()}
                                         </Card.Body>
                                     </Card>
                                     <Card className="shadow-sm mt-5">
                                         <Card.Body>
-                                            <FormControl>
-                                                <FormLabel id="demo-radio-buttons-group-label"
-                                                           className="text-grey me-auto"
-                                                >Answers</FormLabel>
-                                                <RadioGroup
-                                                    aria-labelledby="demo-radio-buttons-group-label"
-                                                    defaultValue="female"
-                                                    name="radio-buttons-group"
-                                                >
-                                                    <FormControlLabel value="1" control={<Radio/>} label={
-                                                        "1. Lorem ipsumLorem ipsum dolor sit amet, consectetur adipiscing elit"
-                                                    }/>
-                                                    <FormControlLabel value="2" control={<Radio/>} label={
-                                                        "2. sed do eiusmod tempor incididunt ut labore et"
-                                                    }/>
-                                                    <FormControlLabel value="3" control={<Radio/>} label={
-                                                        "3. dolore magna aliqua. Ut enim ad minim veniam, quis"
-                                                    }/>
-                                                    <FormControlLabel value="4" control={<Radio/>} label={
-                                                        "4. dolore magna aliqua. Ut enim ad minim veniam, quis"
-                                                    }/>
-                                                </RadioGroup>
-                                            </FormControl>
+                                            {renderAnswers()}
+                                            {SelectionValidity()}
                                         </Card.Body>
                                     </Card>
                                 </Col>
@@ -105,6 +169,12 @@ const ExamPaper:React.FC = () =>{
                                 </Col>
                                 <Col sm={12}>
                                     <Button variant="primary mt-5">Video Conference</Button>
+                                    <Button variant="danger mt-5"
+                                            onClick={e => {
+                                                handleOnEndExam();
+
+                                            }}
+                                    >End Exam</Button>
                                 </Col>
                             </Row>
                         </Col>

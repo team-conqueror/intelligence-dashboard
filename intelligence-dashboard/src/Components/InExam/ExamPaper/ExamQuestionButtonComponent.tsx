@@ -4,7 +4,7 @@ import {Button, Container} from "react-bootstrap";
 type IQuestBtn = {
     questionNumber:number
     questionShadow: eQuestShadow
-    setOnButtonClick: () => void
+    setOnButtonClick: (index: number) => void
 }
 
 const ExamQuestionButtonComponent:React.FC<IQuestBtn> = (props) => {
@@ -19,7 +19,9 @@ const ExamQuestionButtonComponent:React.FC<IQuestBtn> = (props) => {
         <Container  className={"mt-5  text-center" + renderShadow()}>
             <Button
                 variant="outline-dark"
-                onClick={props.setOnButtonClick}
+                onClick={event => {
+                    props.setOnButtonClick(props.questionNumber)
+                }}
             >{props.questionNumber}</Button>
 
         </Container>

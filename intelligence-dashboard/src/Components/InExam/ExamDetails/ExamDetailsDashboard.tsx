@@ -30,6 +30,7 @@ const ExamDetailsDashboard:React.FC = () => {
             <Row>
                 <Navigationbar/>
             </Row>
+            <hr className="p-0 m-0"/>
             <Row className="h-5 navbar-vertical">
                 <Col xs={3} className="bg-light shadow-sm">
                     <Nav defaultActiveKey="/home" className="flex-column m-5" >
@@ -110,8 +111,8 @@ const ExamDetailsDashboard:React.FC = () => {
                                                     </Col>
                                                     <Col xs={9}>
                                                         <Row className="justify-content-start">
-                                                            <Col xs={12} className="text-start">total students</Col>
-                                                            <Col xs={12} className="text-start">48</Col>
+                                                            <Col xs={12} className="text-start">Average Score</Col>
+                                                            <Col xs={12} className="text-start">76</Col>
                                                         </Row>
                                                     </Col>
                                                 </Row>
@@ -130,8 +131,8 @@ const ExamDetailsDashboard:React.FC = () => {
                                                         </Col>
                                                         <Col xs={9}>
                                                             <Row className="justify-content-start">
-                                                                <Col xs={12} className="text-start">H</Col>
-                                                                <Col xs={12} className="text-start">G</Col>
+                                                                <Col xs={12} className="text-start">Total Absent Students</Col>
+                                                                <Col xs={12} className="text-start">1</Col>
                                                             </Row>
                                                         </Col>
                                                     </Row>
@@ -152,8 +153,10 @@ const ExamDetailsDashboard:React.FC = () => {
                                                         </Col>
                                                         <Col xs={9}>
                                                             <Row className="justify-content-start">
-                                                                <Col xs={12} className="text-start">H</Col>
-                                                                <Col xs={12} className="text-start">G</Col>
+                                                                <Col xs={12} className="text-start">
+                                                                    Total Finished Students
+                                                                </Col>
+                                                                <Col xs={12} className="text-start">15</Col>
                                                             </Row>
                                                         </Col>
                                                     </Row>
@@ -174,8 +177,10 @@ const ExamDetailsDashboard:React.FC = () => {
                                                         </Col>
                                                         <Col xs={9}>
                                                             <Row className="justify-content-start">
-                                                                <Col xs={12} className="text-start">H</Col>
-                                                                <Col xs={12} className="text-start">G</Col>
+                                                                <Col xs={12} className="text-start">
+                                                                    Total Passed Students
+                                                                </Col>
+                                                                <Col xs={12} className="text-start">12</Col>
                                                             </Row>
                                                         </Col>
                                                     </Row>
@@ -196,8 +201,10 @@ const ExamDetailsDashboard:React.FC = () => {
                                                         </Col>
                                                         <Col xs={9}>
                                                             <Row className="justify-content-start">
-                                                                <Col xs={12} className="text-start">H</Col>
-                                                                <Col xs={12} className="text-start">G</Col>
+                                                                <Col xs={12} className="text-start">
+                                                                    Total Failed Students
+                                                                </Col>
+                                                                <Col xs={12} className="text-start">3</Col>
                                                             </Row>
                                                         </Col>
                                                     </Row>

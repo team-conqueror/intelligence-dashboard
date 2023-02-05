@@ -3,12 +3,20 @@ import {Button, Card, Col, Row} from "react-bootstrap";
 import {Avatar, Stack} from "@mui/material";
 import * as Icon from "react-bootstrap-icons";
 
-const ExamButton:FC = () => {
+type examButtonType = {
+    courseCode: string
+    examDate: string
+    teacherName: string
+    timeRemaining: string
+    buttonPress: () => void
+}
+
+const ExamButton:FC<examButtonType> = (props) => {
     return(
         <Card className="pt-4 pe-5 ps-5 pb-4">
-            <Card.Title className="me-auto" >Course Code</Card.Title>
-            <Card.Text className="me-auto mb-0" >Examination - octomber 2021</Card.Text>
-            <Card.Text className="me-auto">By: John Snow</Card.Text>
+            <Card.Title className="me-auto" >{props.courseCode}</Card.Title>
+            <Card.Text className="me-auto mb-0" >{props.examDate}</Card.Text>
+            <Card.Text className="me-auto">{props.teacherName}</Card.Text>
             <Row className="justify-content-md-center">
                 <Stack direction="row" spacing={2}>
                     <Col xs={2}>

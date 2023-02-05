@@ -16,3 +16,20 @@ export type IExamSingleQuestion = {
     answer4: string
     correctAnswer: string
 }
+
+export type IServerExamPaper = {
+    name: string
+    teacher: string
+    timeDuration: string
+    courseCode: string
+    dateAndTime: string
+    questions: IServerSingleQuestion[]
+}
+export type IServerSingleQuestion = {
+    question: string
+    answerOne: string
+    answerTwo: string
+    answerThree: string
+    answerFour: string
+    correctAnswer: string
+}
