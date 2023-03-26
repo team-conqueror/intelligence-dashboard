@@ -2,7 +2,12 @@ import React from "react";
 import {Button, Card, Col, Container, Row} from "react-bootstrap";
 import * as Icon from "react-bootstrap-icons"
 
-const ExamResultRightArea:React.FC = () => {
+type IStudentType = {
+    name: string,
+    indexNumber: string,
+    academicYear: string
+}
+const ExamResultRightArea:React.FC<IStudentType> = (props) => {
     return(
         <Container>
             <Row>
@@ -22,25 +27,25 @@ const ExamResultRightArea:React.FC = () => {
                                     Student Name with initials
                                 </Col>
                                 <Col xs={6}>
-                                    : A B C D John Snow
+                                    : {props.name}
                                 </Col>
                                 <Col xs={6}>
                                     Student Full Name
                                 </Col>
                                 <Col xs={6}>
-                                    : A B C D John Snow
+                                    : {props.name}
                                 </Col>
                                 <Col xs={6}>
                                     Index number
                                 </Col>
                                 <Col xs={6}>
-                                    : SE/2017/001
+                                    : {props.indexNumber}
                                 </Col>
                                 <Col xs={6}>
                                     Academic year
                                 </Col>
                                 <Col xs={6}>
-                                    : 2017/2018
+                                    : {props.academicYear}
                                 </Col>
                             </Row>
                         </Card.Text>

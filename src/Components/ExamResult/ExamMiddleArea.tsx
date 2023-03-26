@@ -1,4 +1,5 @@
-import React from "react";
+import React, {useEffect, useState} from "react";
+import axios from "axios";
 import {Col, Container, Row} from "react-bootstrap";
 import {IResult} from "../../Types/SingleResultType";
 import ExamResultSingle from "./ExamResultSingle";
@@ -86,6 +87,20 @@ const sampleResultSheet : IResult[] = [
 ]
 
 const ExamMiddleArea:React.FC = () => {
+
+    const [students, setStudents] = useState([]);
+
+    useEffect(() => {
+        axios.get("http://localhost:8080/getStudents")
+            .then((response) => {
+                setStudents(response.data);
+                console.log(response.data);
+            })
+            .catch((error) => {
+                console.log(error);
+            })
+    }, []);
+
     const renderResults = () => {
         return sampleResultSheet.map((singleResult) => {
             return <ExamResultSingle result={singleResult}/>;
