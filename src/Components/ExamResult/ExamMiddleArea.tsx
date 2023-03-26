@@ -86,20 +86,25 @@ const sampleResultSheet : IResult[] = [
 
 ]
 
-const ExamMiddleArea:React.FC = () => {
+type studentDetails = {
+    id: string
+}
 
-    const [students, setStudents] = useState([]);
+const ExamMiddleArea:React.FC<studentDetails> = (props) => {
+
+    const [subjects, setSubjects] = useState<any>([{}]);
 
     useEffect(() => {
-        axios.get("http://localhost:8080/getStudents")
+        axios.get("http://localhost:8080/getStudent/" + props.id)
             .then((response) => {
-                setStudents(response.data);
+                setSubjects(response.data);
                 console.log(response.data);
             })
-            .catch((error) => {
-                console.log(error);
+            .catch((err) => {
+                console.error(err);
             })
-    }, []);
+    }, [])
+
 
     const renderResults = () => {
         return sampleResultSheet.map((singleResult) => {

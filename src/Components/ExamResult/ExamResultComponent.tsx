@@ -13,6 +13,7 @@ const ExamResultComponent:React.FC = () => {
     const [studentName, setStudentName] = useState<string>("");
     const [indexNumber, setIndexNumber] = useState<string>("");
     const [academicYear, setAcademicYear] = useState<string>("");
+    const [studentId, setStudentId] = useState<string>("");
 
     const sampleId = "641fffd41efe8e63554cd44a";
 
@@ -23,6 +24,7 @@ const ExamResultComponent:React.FC = () => {
                 setStudentName(response.data.name);
                 setIndexNumber(response.data.studentNumber);
                 setAcademicYear(response.data.academicYear);
+                setStudentId(response.data.id);
                 console.log(response.data);
             })
             .catch((error) => {
@@ -59,7 +61,7 @@ const ExamResultComponent:React.FC = () => {
                     </Row>
                 </Col>
                 <Col xs={6}>
-                    <ExamMiddleArea/>
+                    <ExamMiddleArea id={studentId}/>
                 </Col>
                 <Col xs={3}>
                     <ExamResultRightArea academicYear={renderStudentYear()}
