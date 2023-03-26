@@ -15,7 +15,7 @@ const ExamResultComponent:React.FC = () => {
     const [academicYear, setAcademicYear] = useState<string>("");
     const [studentId, setStudentId] = useState<string>("");
 
-    const sampleId = "641fffd41efe8e63554cd44a";
+    const sampleId = "642001051d8c24f6b09297f9";
 
     useEffect(() => {
         axios.get("http://localhost:8080/getStudent/" + sampleId)
@@ -24,8 +24,7 @@ const ExamResultComponent:React.FC = () => {
                 setStudentName(response.data.name);
                 setIndexNumber(response.data.studentNumber);
                 setAcademicYear(response.data.academicYear);
-                setStudentId(response.data.id);
-                console.log(response.data);
+                setStudentId(response.data._id);
             })
             .catch((error) => {
                 console.log(error);
@@ -40,6 +39,9 @@ const ExamResultComponent:React.FC = () => {
     }
     const renderStudentYear = () => {
         return academicYear;
+    }
+    const renderStudentID = () => {
+        return sampleId;
     }
 
     return(
@@ -61,7 +63,7 @@ const ExamResultComponent:React.FC = () => {
                     </Row>
                 </Col>
                 <Col xs={6}>
-                    <ExamMiddleArea id={studentId}/>
+                    <ExamMiddleArea id={renderStudentID()}/>
                 </Col>
                 <Col xs={3}>
                     <ExamResultRightArea academicYear={renderStudentYear()}

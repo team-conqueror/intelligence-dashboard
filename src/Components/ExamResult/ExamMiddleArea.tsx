@@ -5,86 +5,6 @@ import {IResult} from "../../Types/SingleResultType";
 import ExamResultSingle from "./ExamResultSingle";
 
 
-const sampleResultSheet : IResult[] = [
-    {
-        courseCode: "SENG 11232",
-        subjectName: "Software Process",
-        year: "2017/2018",
-        grade: "A+"
-    },
-    {
-        courseCode: "SENG 11232",
-        subjectName: "Software Process",
-        year: "2017/2018",
-        grade: "A+"
-    },{
-        courseCode: "SENG 11232",
-        subjectName: "Software Process",
-        year: "2017/2018",
-        grade: "A+"
-    },
-    {
-        courseCode: "SENG 11232",
-        subjectName: "Software Process",
-        year: "2017/2018",
-        grade: "A+"
-    },
-    {
-        courseCode: "SENG 11232",
-        subjectName: "Software Process",
-        year: "2017/2018",
-        grade: "A+"
-    },
-    {
-        courseCode: "SENG 11232",
-        subjectName: "Software Process",
-        year: "2017/2018",
-        grade: "A+"
-    },
-    {
-        courseCode: "SENG 11232",
-        subjectName: "Software Process",
-        year: "2017/2018",
-        grade: "A+"
-    },
-    {
-        courseCode: "SENG 11232",
-        subjectName: "Software Process",
-        year: "2017/2018",
-        grade: "A+"
-    },
-    {
-        courseCode: "SENG 11232",
-        subjectName: "Software Process",
-        year: "2017/2018",
-        grade: "A+"
-    },
-    {
-        courseCode: "SENG 11232",
-        subjectName: "Software Process",
-        year: "2017/2018",
-        grade: "A+"
-    },
-    {
-        courseCode: "SENG 11232",
-        subjectName: "Software Process",
-        year: "2017/2018",
-        grade: "A+"
-    },
-    {
-        courseCode: "SENG 11232",
-        subjectName: "Software Process",
-        year: "2017/2018",
-        grade: "A+"
-    },
-    {
-        courseCode: "SENG 11232",
-        subjectName: "Software Process",
-        year: "2017/2018",
-        grade: "A+"
-    }
-
-]
 
 type studentDetails = {
     id: string
@@ -92,13 +12,12 @@ type studentDetails = {
 
 const ExamMiddleArea:React.FC<studentDetails> = (props) => {
 
-    const [subjects, setSubjects] = useState<any>([{}]);
+    const [subjects, setSubjects] = useState<IResult[]>([]);
 
     useEffect(() => {
-        axios.get("http://localhost:8080/getStudent/" + props.id)
+        axios.get("http://localhost:8080/getStudent/" + props.id.toString())
             .then((response) => {
-                setSubjects(response.data);
-                console.log(response.data);
+                setSubjects(response.data.subjectsEnrolled);
             })
             .catch((err) => {
                 console.error(err);
@@ -106,9 +25,18 @@ const ExamMiddleArea:React.FC<studentDetails> = (props) => {
     }, [])
 
 
-    const renderResults = () => {
+    /*const renderResults = () => {
         return sampleResultSheet.map((singleResult) => {
             return <ExamResultSingle result={singleResult}/>;
+        })
+    }*/
+    const renderResults = () => {
+        return subjects.map((singleResult) => {
+            return <ExamResultSingle
+                courseCode={singleResult.courseCode}
+                subjectName={singleResult.subName}
+                year={singleResult.status}
+                grade={singleResult.marks}/>;
         })
     }
     return(

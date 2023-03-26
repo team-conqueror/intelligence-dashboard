@@ -1,6 +1,6 @@
 export type IResult = {
-    courseCode : string
-    subjectName: string
-    year: string
-    grade: string
+    subName : string
+    courseCode: string
+    status: string
+    marks: string
 }
