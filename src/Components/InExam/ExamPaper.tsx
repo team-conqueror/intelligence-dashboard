@@ -1,4 +1,4 @@
-import React, {useState} from "react";
+import React, {useState, useEffect} from "react";
 import {Button, Card, Col, Container, Row} from "react-bootstrap";
 import {FormControl, FormControlLabel, FormLabel, Radio, RadioGroup} from "@mui/material";
 import {examQuestionsSample} from "../../Repository/ExamQuestions/ExamQuestionsSample";
@@ -9,12 +9,25 @@ import {Controller, useForm} from "react-hook-form";
 import {Input} from "@material-ui/core";
 import Select from "react-select";
 import {Input as AntdInput} from "antd";
-import {IStudentAnswers} from "../../Types/Questions";
+import {IQuestions, IStudentAnswers} from "../../Types/Questions";
+import axios from "axios";
 
 const ExamPaper:React.FC = (props) =>{
     const currentQuestionNumber:number = 1;
     const studentAnswerList:IStudentAnswers[] = [];
     const testInt:number[] = [];
+
+    const [questions, setQuestions] = useState<IQuestions[]>([]);
+    useEffect(() => {
+        axios.get("http://localhost:8080/getPapers")
+            .then((response) => {
+                setQuestions(response.data);
+                console.log(response.data);
+            })
+            .catch((err) => {
+                console.error(err);
+            })
+    }, [])
 
 
     const { register, handleSubmit, watch, formState: {errors} , control } = useForm();
@@ -37,7 +50,8 @@ const ExamPaper:React.FC = (props) =>{
         setQnumber(data);
     }
 
-    const renderButtons = () => {
+    /*const renderButtons = () => {
+        console.log("this is questions" + questions[0].index);
         return examQuestionsSample.map(questions => {
           return <Col sm={3}>
               <ExamQuestionButtonComponent
@@ -47,9 +61,21 @@ const ExamPaper:React.FC = (props) =>{
                   />
           </Col>
         })
+    }*/
+    const renderButtons = () => {
+        console.log("this is questions" + questions[0]?.index );
+        return questions?.map(questions => {
+            return <Col sm={3}>
+                <ExamQuestionButtonComponent
+                    questionNumber={questions.index}
+                    questionShadow={qnumber === questions.index ? eQuestShadow.on : eQuestShadow.off}
+                    setOnButtonClick={handleOnBtnClick}
+                />
+            </Col>
+        })
     }
     const renderQuestions = () => {
-        return examQuestionsSample.map(onequestion => {
+        return questions?.map(onequestion => {
             if(onequestion.index == qnumber){
                 return <>{onequestion.Question}</>
             }
@@ -102,7 +128,7 @@ const ExamPaper:React.FC = (props) =>{
         }
     }
     const renderAnswers = () => {
-        return examQuestionsSample.map(onequestion => {
+        return questions?.map(onequestion => {
             if(onequestion.index === qnumber){
                 return (<Row>
                     <Col xs={12}>
@@ -124,7 +150,7 @@ const ExamPaper:React.FC = (props) =>{
     return(
         <Container fluid={true}>
             <Navigationbar/>
-            <Button>{qnumber}</Button>
+            {/*<Button>{qnumber}</Button>*/}
             <Row className="justify-content-center bg-light-grey" >
                 <Col xs={8}>
                     <Row className="justify-content-md-end ">

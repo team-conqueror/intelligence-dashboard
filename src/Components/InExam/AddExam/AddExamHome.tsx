@@ -14,6 +14,9 @@ export type IExam = {
 }
 
 const AddExamHome:React.FC<IExam> = (props) => {
+
+    const [questionsToAdd, setQuestionsToAdd] = useState<IServerSingleQuestion[]>([]);
+
     const examPaper:IExamPaperType = {
         subjectName: "",
         courseCode: "",
@@ -24,19 +27,21 @@ const AddExamHome:React.FC<IExam> = (props) => {
         questions: []
     }
     const tempQuestion:IServerSingleQuestion = {
-        question: "sfdafs",
-        answerOne: "sfda",
-        answerTwo: "fasdf",
-        answerThree: "sdaf",
-        answerFour: "sfad",
-        correctAnswer: "fsdfa"
+        index: "1",
+        Question: "sfdafs",
+        answer_one: "sfda",
+        answer_two: "fasdf",
+        answer_three: "sdaf",
+        answer_four: "sfad",
+        correct_answer: "fsdfa"
     };
     let tempPaper:IServerExamPaper = {
-        name: "Hello",
+        subjectName: "Hello",
         teacher: "sdfa",
         timeDuration: "fsdaf",
         courseCode: "fsdaf",
         dateAndTime: "sfad",
+        instruction: "sfad",
         questions: [tempQuestion, tempQuestion]
     }
 
@@ -69,12 +74,13 @@ const AddExamHome:React.FC<IExam> = (props) => {
         examPaper.instructions = data.instructions;
 
         tempPaper={
-            name: data.subjectName,
+            subjectName : data.subjectName,
             dateAndTime: data.dateAndTime,
             teacher: data.teacher,
             courseCode: data.courseCode,
             timeDuration: data.timeDuration,
-            questions: serverQuestion
+            instruction: data.instructions,
+            questions: questionsToAdd
         }
         addItemsToServerArray(tempPaper);
         axios.post('http://localhost:8080/addpaper', tempPaper,{headers})
@@ -84,22 +90,32 @@ const AddExamHome:React.FC<IExam> = (props) => {
             .catch(err => {
                 console.error(err.response.data);
             });
-        console.log(examPaper);
+        console.log(tempPaper);
 
     };
 
 
     const AddAQuestion = (data:IMcqQuestion) => {
         addItemsToServerQuestions({
-            question: data.question,
-            answerOne: data.answer1,
-            answerTwo: data.answer2,
-            answerThree: data.answer3,
-            answerFour: data.answer4,
-            correctAnswer: data.correctAnswer
+            index: (questionsToAdd.length+1).toString(),
+            Question: data.question,
+            answer_one: data.answer1,
+            answer_two: data.answer2,
+            answer_three: data.answer3,
+            answer_four: data.answer4,
+            correct_answer: data.correctAnswer
         })
         examPaper.questions.push(data);
-        console.log(examPaper);
+        setQuestionsToAdd([...questionsToAdd,{
+            index: (questionsToAdd.length+1).toString(),
+            Question: data.question,
+            answer_one: data.answer1,
+            answer_two: data.answer2,
+            answer_three: data.answer3,
+            answer_four: data.answer4,
+            correct_answer: data.correctAnswer
+        }]);
+        console.log(questionsToAdd);
     }
 
     return(
