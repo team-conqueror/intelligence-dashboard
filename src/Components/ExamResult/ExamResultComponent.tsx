@@ -10,11 +10,19 @@ import ExamResultRightArea from "./ExamResultRightArea";
 const ExamResultComponent:React.FC = () => {
 
     const [students, setStudents] = useState<any[]>([]);
+    const [studentName, setStudentName] = useState<string>("");
+    const [indexNumber, setIndexNumber] = useState<string>("");
+    const [academicYear, setAcademicYear] = useState<string>("");
+
+    const sampleId = "641fffd41efe8e63554cd44a";
 
     useEffect(() => {
-        axios.get("http://localhost:8080/getStudents")
+        axios.get("http://localhost:8080/getStudent/" + sampleId)
             .then((response) => {
                 setStudents(response.data);
+                setStudentName(response.data.name);
+                setIndexNumber(response.data.studentNumber);
+                setAcademicYear(response.data.academicYear);
                 console.log(response.data);
             })
             .catch((error) => {
@@ -23,13 +31,13 @@ const ExamResultComponent:React.FC = () => {
     }, []);
 
     const renderStudentName = () => {
-        return students[0].name;
+        return studentName;
     }
     const renderStudentIndex = () => {
-        return students[0].studentNumber;
+        return indexNumber;
     }
     const renderStudentYear = () => {
-        return students[0].academicYear;
+        return academicYear;
     }
 
     return(
