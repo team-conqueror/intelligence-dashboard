@@ -1,4 +1,4 @@
-import React from "react";
+import React, {useEffect, useState} from "react";
 import {Alert, Button, Card, Col, Container, Nav, Row} from "react-bootstrap";
 import * as Icon from "react-bootstrap-icons";
 import Navigationbar from "../../Common/Navigationbar";
@@ -9,19 +9,64 @@ import SingleStudentDetail from "./SingleStudentDetail";
 import SearchArea from "../../SearchArea/SearchArea";
 import ExamDashboardItem from "./ExamDashboardItem";
 import {eExamDetailsIcons} from "../../../Types/ExamDetailsDashboardType";
+import axios from "axios";
+import {SAMPLE_DATA} from "../../../Repository/constants";
+import {studentsInExamType} from "../../../Types/ExamStudentDetailsType";
 
 const ExamDetailsDashboard:React.FC = () => {
 
+    const [totalStudents, setTotalStudents] = useState<string>("");
+    const [avarageScore, setAvarageScore] = useState<string>("");
+    const [absentCount, setAbsentCount] = useState<string>("");
+    const [finishedCount, setFinishedCount] = useState<string>("");
+    const [passedCount, setPassedCount] = useState<string>("");
+    const [failedCount, setFailedCount] = useState<string>("");
+    const [examStatus, setExamStatus] = useState<string>("");
+    const [grade, setGrade] = useState<string>();
+
+
+    const [followingStudents, setFollowingStudents] = useState<studentsInExamType[]>([]);
+
+    useEffect(() => {
+        axios.get("http://localhost:8080/getStudentsCc/"+ SAMPLE_DATA.COURSE_CODE)
+            .then((response) => {
+                console.log(response.data);
+                setTotalStudents(response.data.length);
+                setFollowingStudents(response.data);
+            })
+    },[])
+
+    const renderMarks = (singleStudent: studentsInExamType) : string => {
+        let studentMark:string = "";
+        singleStudent.subjectsEnrolled.map(subject => {
+            console.log(subject.courseCode);
+            if(subject.courseCode == SAMPLE_DATA.COURSE_CODE){
+                studentMark = subject.marks;
+            }
+        })
+        return studentMark;
+    }
+    const renderStatus = (singleStudent: studentsInExamType): string => {
+        let studentStatus: string = "";
+        singleStudent.subjectsEnrolled.map(subject => {
+            if(subject.courseCode == SAMPLE_DATA.COURSE_CODE){
+                studentStatus = subject.status;
+            }
+        })
+        return studentStatus;
+    }
+
     const renderStudents = () =>{
-        return ExamStudentsSample.map(student => {
+        return followingStudents?.map(student => {
+
             return <SingleStudentDetail
                 name={student.name}
-                examStatus={student.examStatus}
-                score={student.score}
-                grade={student.grade}
-                timeSpent={student.timeSpent}
-                submittedTime={student.submittedTime}
-                details={student.details}/>
+                examStatus={renderStatus(student)}
+                score={"--"}
+                grade={renderMarks(student)}
+                timeSpent={"--"}
+                submittedTime={"--"}
+                details={"--"}/>
         })
     }
 
@@ -92,7 +137,7 @@ const ExamDetailsDashboard:React.FC = () => {
                                                     <Col xs={9}>
                                                         <Row className="justify-content-start">
                                                             <Col xs={12} className="text-start">total students</Col>
-                                                            <Col xs={12} className="text-start">48</Col>
+                                                            <Col xs={12} className="text-start">{totalStudents}</Col>
                                                         </Row>
                                                     </Col>
                                                 </Row>
@@ -112,7 +157,7 @@ const ExamDetailsDashboard:React.FC = () => {
                                                     <Col xs={9}>
                                                         <Row className="justify-content-start">
                                                             <Col xs={12} className="text-start">Average Score</Col>
-                                                            <Col xs={12} className="text-start">76</Col>
+                                                            <Col xs={12} className="text-start">--</Col>
                                                         </Row>
                                                     </Col>
                                                 </Row>
@@ -132,7 +177,7 @@ const ExamDetailsDashboard:React.FC = () => {
                                                         <Col xs={9}>
                                                             <Row className="justify-content-start">
                                                                 <Col xs={12} className="text-start">Total Absent Students</Col>
-                                                                <Col xs={12} className="text-start">1</Col>
+                                                                <Col xs={12} className="text-start">--</Col>
                                                             </Row>
                                                         </Col>
                                                     </Row>
@@ -156,7 +201,7 @@ const ExamDetailsDashboard:React.FC = () => {
                                                                 <Col xs={12} className="text-start">
                                                                     Total Finished Students
                                                                 </Col>
-                                                                <Col xs={12} className="text-start">15</Col>
+                                                                <Col xs={12} className="text-start">{totalStudents}</Col>
                                                             </Row>
                                                         </Col>
                                                     </Row>
@@ -234,10 +279,10 @@ const ExamDetailsDashboard:React.FC = () => {
                                                             </Alert>
                             <Row className="pt-3 pb-2">
                                 <Col xs={2}>Student Name</Col>
-                                <Col xs={1}>Passed/failed</Col>
-                                <Col xs={1}>Score</Col>
+                                <Col xs={1}>Status</Col>
+                                <Col xs={1}></Col>
                                 <Col xs={1}>Grade</Col>
-                                <Col xs={2}>Time Spent</Col>
+                                <Col xs={2}></Col>
                                 <Col xs={2}>Submitted Time</Col>
                                 <Col xs={2}>Details</Col>
                             </Row>

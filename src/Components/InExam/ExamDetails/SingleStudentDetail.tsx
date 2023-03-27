@@ -38,7 +38,7 @@ const SingleStudentDetail:React.FC<examStudentDetailsType> = (props) => {
                     <Col xs={1}>{renderGrade()}</Col>
                     <Col xs={2}>{props.timeSpent}</Col>
                     <Col xs={2}>{props.submittedTime}</Col>
-                    <Col xs={2}>Dee Details</Col>
+                    <Col xs={2}>See Details</Col>
                 </Row>
             </Card>
         </Col>

@@ -1,7 +1,21 @@
+export type studentsInExamType = {
+    name: string,
+    studentNumber: string,
+    academicYear: string,
+    subjectsEnrolled: [
+        {
+            subName: string,
+            courseCode: string,
+            status: string,
+            marks: string
+        }
+    ]
+}
+
 export type examStudentDetailsType = {
     name: string
-    examStatus: eExamStatus,
-    score: number,
+    examStatus: string,
+    score: string,
     grade: string,
     timeSpent: string,
     submittedTime: string,
