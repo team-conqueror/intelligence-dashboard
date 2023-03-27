@@ -1,0 +1,3 @@
+export const SAMPLE_DATA = {
+    STUDENT_ID: "642001051d8c24f6b09297f9"
+}

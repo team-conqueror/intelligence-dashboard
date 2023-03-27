@@ -9,25 +9,94 @@ import {Controller, useForm} from "react-hook-form";
 import {Input} from "@material-ui/core";
 import Select from "react-select";
 import {Input as AntdInput} from "antd";
-import {IQuestions, IStudentAnswers} from "../../Types/Questions";
+import {IExamPaper, IQuestions, IStudentAnswers} from "../../Types/Questions";
 import axios from "axios";
+import {SAMPLE_DATA} from "../../Repository/constants";
+import {IExamStudent} from "../../Types/StudentType";
 
 const ExamPaper:React.FC = (props) =>{
     const currentQuestionNumber:number = 1;
     const studentAnswerList:IStudentAnswers[] = [];
     const testInt:number[] = [];
+    let initialStudent: IExamStudent = {
+        name: '',
+        studentNumber: '',
+        academicYear: '',
+        subjectsEnrolled: [
+            {
+                subName: '',
+                courseCode: '',
+                status: '',
+                marks: ''
+            }
+        ]
+    }
 
     const [questions, setQuestions] = useState<IQuestions[]>([]);
+    const [examPaper, setExamPaper] = useState<IExamPaper[]>([]);
+    const [marks, setMarks] = useState<number>(0);
+    const [papersubmit, setPaperSubmit] = useState<boolean>(false);
     useEffect(() => {
         axios.get("http://localhost:8080/getPapers")
             .then((response) => {
-                setQuestions(response.data);
-                console.log(response.data);
+                setExamPaper(response.data);
             })
             .catch((err) => {
                 console.error(err);
             })
     }, [])
+
+    useEffect(() => {
+        console.log("marks value is " + marks);
+        let grade:number = (marks/examPaper[2]?.questions.length)*100;
+        type GradeVal = "A+" | "A" | "B" | "C" | "D" | "F";
+        function getGrade(marks: number):GradeVal{
+            if (marks >= 90) {
+                return "A+";
+            } else if (marks >= 80) {
+                return "A";
+            } else if (marks >= 70) {
+                return "B";
+            } else if (marks >= 60) {
+                return "C";
+            } else if (marks >= 50) {
+                return "D";
+            } else {
+                return "F";
+            }
+        }
+        console.log("grade is " + getGrade(grade));
+        axios.get("http://localhost:8080/getStudent/" + SAMPLE_DATA.STUDENT_ID)
+            .then((response) => {
+                console.log(response.data);
+                initialStudent.studentNumber = response.data.studentNumber;
+                initialStudent.name = response.data.name;
+                initialStudent.academicYear = response.data.academicYear;
+                initialStudent.subjectsEnrolled = response.data.subjectsEnrolled;
+                console.log("exam that they are writing"+examPaper[2]?.courseCode);
+                initialStudent.subjectsEnrolled.forEach((subject, index) => {
+                    if(subject.courseCode == examPaper[2]?.courseCode){
+                        initialStudent.subjectsEnrolled[index].marks = getGrade(grade);
+                        initialStudent.subjectsEnrolled[index].status = "Written";
+                    }
+                })
+                console.log("this is new student " );
+                if(papersubmit){
+                    axios.put("http://localhost:8080/updateStudent/" + SAMPLE_DATA.STUDENT_ID, initialStudent)
+                        .then((response) => {
+                            console.log(response.data);
+                        })
+                        .catch((error)=>{
+                            console.log(error);
+                        })
+                }
+
+
+            })
+            .catch((error) => {
+                console.log(error);
+            })
+    },[marks])
 
 
     const { register, handleSubmit, watch, formState: {errors} , control } = useForm();
@@ -40,7 +109,7 @@ const ExamPaper:React.FC = (props) =>{
             answer: data.correctAnswer.value
         };
         setAnswers(prevAnswers => [...prevAnswers, TempAnswer]);
-        console.log(answers);
+
     };
 
     const[qnumber, setQnumber] = useState<number>(1);
@@ -48,35 +117,23 @@ const ExamPaper:React.FC = (props) =>{
     const handleOnBtnClick = (data: any) =>{
         console.log(data);
         setQnumber(data);
+
     }
 
-    /*const renderButtons = () => {
-        console.log("this is questions" + questions[0].index);
-        return examQuestionsSample.map(questions => {
-          return <Col sm={3}>
-              <ExamQuestionButtonComponent
-                  questionNumber={questions.index}
-                  questionShadow={qnumber === questions.index ? eQuestShadow.on : eQuestShadow.off}
-                  setOnButtonClick={handleOnBtnClick}
-                  />
-          </Col>
-        })
-    }*/
     const renderButtons = () => {
-        console.log("this is questions" + questions[0]?.index );
-        return questions?.map(questions => {
+        return examPaper[2]?.questions.map(questions => {
             return <Col sm={3}>
                 <ExamQuestionButtonComponent
-                    questionNumber={questions.index}
-                    questionShadow={qnumber === questions.index ? eQuestShadow.on : eQuestShadow.off}
+                    questionNumber={Number(questions.index)}
+                    questionShadow={qnumber === Number(questions.index) ? eQuestShadow.on : eQuestShadow.off}
                     setOnButtonClick={handleOnBtnClick}
                 />
             </Col>
         })
     }
     const renderQuestions = () => {
-        return questions?.map(onequestion => {
-            if(onequestion.index == qnumber){
+        return examPaper[2]?.questions.map(onequestion => {
+            if(Number(onequestion.index) == qnumber){
                 return <>{onequestion.Question}</>
             }
             return <></>
@@ -84,6 +141,15 @@ const ExamPaper:React.FC = (props) =>{
     }
     const handleOnEndExam = () => {
         console.log(answers);
+        examPaper[2]?.questions.forEach((singleQ, index) => {
+            if(singleQ.correct_answer == answers[index].answer){
+                setMarks(prevMarks => prevMarks + 1);
+                setPaperSubmit(true);
+            }else{
+
+            }
+        })
+
     }
     const SelectionValidity = () => {
         var foundQ:boolean = false;
@@ -128,20 +194,20 @@ const ExamPaper:React.FC = (props) =>{
         }
     }
     const renderAnswers = () => {
-        return questions?.map(onequestion => {
-            if(onequestion.index === qnumber){
+        return examPaper[2]?.questions.map(onequestion => {
+            if(Number(onequestion.index) === qnumber){
                 return (<Row>
                     <Col xs={12}>
-                        1. {onequestion.Answers.answer_one}
+                        1. {onequestion.answer_one}
                     </Col>
                     <Col xs={12}>
-                        2. {onequestion.Answers.answer_two}
+                        2. {onequestion.answer_two}
                     </Col>
                     <Col xs={12}>
-                        3. {onequestion.Answers.answer_three}
+                        3. {onequestion.answer_three}
                     </Col>
                     <Col xs={12}>
-                        4. {onequestion.Answers.answer_four}
+                        4. {onequestion.answer_four}
                     </Col>
                 </Row>)
             }
