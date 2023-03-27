@@ -4,17 +4,26 @@ import ExamButton from "./ExamButton";
 import * as Icon from "react-bootstrap-icons";
 import Navigationbar from "../../Common/Navigationbar";
 import axios from "axios";
+import {IExamPaperType} from "../../../Types/ExamPaperType";
+import {IExamPaper} from "../../../Types/Questions";
 
 const ExamDashboard:React.FC = () => {
-    const [allExamsServer, setAllExamsServer] = useState([{}]);
+    const [allExamsServer, setAllExamsServer] = useState<IExamPaper[]>([]);
+
     useEffect(() => {
-        getAllExams();
+        axios.get("http://localhost:8080/getPapers/")
+            .then((response) => {
+                setAllExamsServer(response.data);
+            })
+            .catch((err) => {
+                console.error(err);
+            })
 
     }, []);
 
     const getAllExams = async () => {
         try {
-            await axios.get("http://localhost:8080/getpapers/").then(response => {
+            await axios.get("http://localhost:8080/getPapers/").then(response => {
                 setAllExamsServer(response.data);
                 console.log(allExamsServer);
             })
@@ -26,6 +35,23 @@ const ExamDashboard:React.FC = () => {
 
     const getStateArray = () => {
         return (console.log(allExamsServer));
+    }
+    const renderExamBtns = () => {
+        return(
+            allExamsServer.map(singleExam => {
+                return(
+                    <Col xs={4} className="pb-2">
+                        <ExamButton
+                            courseCode={singleExam.courseCode}
+                            examDate={""}
+                            teacherName={""}
+                            timeRemaining={""}
+                            buttonPress={()=>{}}/>
+                    </Col>
+                    )
+
+            })
+        )
     }
 
 
@@ -46,15 +72,7 @@ const ExamDashboard:React.FC = () => {
                         </Col>
                     </Row>
                     <Row>
-                        <Col xs={4}>
-                            <ExamButton courseCode={"SENG-21212"}
-                                        buttonPress={()=> {}}
-                                        examDate={"2021:21:32"}
-                                        teacherName={"Jeewantha Lahiru"}
-                                        timeRemaining={"sdf"}
-                            />
-
-                        </Col>
+                        {renderExamBtns()}
 
                     </Row>
                     <Row className="justify-content-center">

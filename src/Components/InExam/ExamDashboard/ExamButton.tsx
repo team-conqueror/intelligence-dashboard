@@ -2,6 +2,7 @@ import React, {FC} from "react";
 import {Button, Card, Col, Row} from "react-bootstrap";
 import {Avatar, Stack} from "@mui/material";
 import * as Icon from "react-bootstrap-icons";
+import {useNavigate} from "react-router-dom";
 
 type examButtonType = {
     courseCode: string
@@ -12,6 +13,13 @@ type examButtonType = {
 }
 
 const ExamButton:FC<examButtonType> = (props) => {
+    const navigate = useNavigate();
+
+    const handleClick = () => {
+        console.log('Button click ' + props.courseCode);
+        navigate('/exampaper', { state: { courseCodec: props.courseCode } });
+    }
+
     return(
         <Card className="pt-4 pe-5 ps-5 pb-4">
             <Card.Title className="me-auto" >{props.courseCode}</Card.Title>
@@ -47,7 +55,7 @@ const ExamButton:FC<examButtonType> = (props) => {
             </Row>
             <Row className="justify-content-end pt-3">
                 <Col xs={4}>
-                    <Button variant="primary">View <Icon.ArrowRightCircleFill /> </Button>
+                    <Button variant="primary" onClick={handleClick}>View <Icon.ArrowRightCircleFill /> </Button>
                 </Col>
             </Row>
 

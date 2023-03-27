@@ -13,11 +13,32 @@ import {IExamPaper, IQuestions, IStudentAnswers} from "../../Types/Questions";
 import axios from "axios";
 import {SAMPLE_DATA} from "../../Repository/constants";
 import {IExamStudent} from "../../Types/StudentType";
+import {useLocation} from "react-router-dom";
 
 const ExamPaper:React.FC = (props) =>{
     const currentQuestionNumber:number = 1;
     const studentAnswerList:IStudentAnswers[] = [];
     const testInt:number[] = [];
+
+    const location = useLocation();
+    const courseCodeFromLoc = location.state.courseCodec;
+    let initialPaper: IExamPaper = {
+        courseCode: "",
+        subjectName: "",
+        teacher: "",
+        dateAndTime: "",
+        instructions: "",
+        timeDuration: "",
+        questions: [{
+            index: "",
+            Question: "",
+            answer_one: "",
+            answer_two: "",
+            answer_three: "",
+            answer_four: "",
+            correct_answer: ""
+        }]
+    }
     let initialStudent: IExamStudent = {
         name: '',
         studentNumber: '',
@@ -33,11 +54,12 @@ const ExamPaper:React.FC = (props) =>{
     }
 
     const [questions, setQuestions] = useState<IQuestions[]>([]);
-    const [examPaper, setExamPaper] = useState<IExamPaper[]>([]);
+    const [examPaper, setExamPaper] = useState<IExamPaper>(initialPaper);
     const [marks, setMarks] = useState<number>(0);
     const [papersubmit, setPaperSubmit] = useState<boolean>(false);
     useEffect(() => {
-        axios.get("http://localhost:8080/getPapers")
+        console.log("course code from loc: "+ courseCodeFromLoc);
+        axios.get("http://localhost:8080/getPaperCourseCode/"+courseCodeFromLoc)
             .then((response) => {
                 setExamPaper(response.data);
             })
@@ -48,7 +70,8 @@ const ExamPaper:React.FC = (props) =>{
 
     useEffect(() => {
         console.log("marks value is " + marks);
-        let grade:number = (marks/examPaper[2]?.questions.length)*100;
+        //let grade:number = (marks/examPaper?.questions.length)*100;
+        const grade:number =  (marks / examPaper?.questions.length)*100;
         type GradeVal = "A+" | "A" | "B" | "C" | "D" | "F";
         function getGrade(marks: number):GradeVal{
             if (marks >= 90) {
@@ -65,7 +88,7 @@ const ExamPaper:React.FC = (props) =>{
                 return "F";
             }
         }
-        console.log("grade is " + getGrade(grade));
+        console.log("grade is " + (grade && getGrade(grade)));
         axios.get("http://localhost:8080/getStudent/" + SAMPLE_DATA.STUDENT_ID)
             .then((response) => {
                 console.log(response.data);
@@ -73,10 +96,10 @@ const ExamPaper:React.FC = (props) =>{
                 initialStudent.name = response.data.name;
                 initialStudent.academicYear = response.data.academicYear;
                 initialStudent.subjectsEnrolled = response.data.subjectsEnrolled;
-                console.log("exam that they are writing"+examPaper[2]?.courseCode);
+                console.log("exam that they are writing"+examPaper?.courseCode);
                 initialStudent.subjectsEnrolled.forEach((subject, index) => {
-                    if(subject.courseCode == examPaper[2]?.courseCode){
-                        initialStudent.subjectsEnrolled[index].marks = getGrade(grade);
+                    if(subject.courseCode == examPaper?.courseCode){
+                        initialStudent.subjectsEnrolled[index].marks =   getGrade(grade);
                         initialStudent.subjectsEnrolled[index].status = "Written";
                     }
                 })
@@ -121,7 +144,7 @@ const ExamPaper:React.FC = (props) =>{
     }
 
     const renderButtons = () => {
-        return examPaper[2]?.questions.map(questions => {
+        return examPaper?.questions.map(questions => {
             return <Col sm={3}>
                 <ExamQuestionButtonComponent
                     questionNumber={Number(questions.index)}
@@ -132,7 +155,7 @@ const ExamPaper:React.FC = (props) =>{
         })
     }
     const renderQuestions = () => {
-        return examPaper[2]?.questions.map(onequestion => {
+        return examPaper?.questions.map(onequestion => {
             if(Number(onequestion.index) == qnumber){
                 return <>{onequestion.Question}</>
             }
@@ -140,15 +163,17 @@ const ExamPaper:React.FC = (props) =>{
         })
     }
     const handleOnEndExam = () => {
-        console.log(answers);
-        examPaper[2]?.questions.forEach((singleQ, index) => {
+        //console.log(answers);
+        examPaper?.questions.forEach((singleQ, index) => {
             if(singleQ.correct_answer == answers[index].answer){
                 setMarks(prevMarks => prevMarks + 1);
-                setPaperSubmit(true);
-            }else{
 
+            }else{
+                console.log("elsePath");
+                setMarks(prevMarks => prevMarks);
             }
         })
+        setPaperSubmit(true);
 
     }
     const SelectionValidity = () => {
@@ -194,7 +219,7 @@ const ExamPaper:React.FC = (props) =>{
         }
     }
     const renderAnswers = () => {
-        return examPaper[2]?.questions.map(onequestion => {
+        return examPaper?.questions.map(onequestion => {
             if(Number(onequestion.index) === qnumber){
                 return (<Row>
                     <Col xs={12}>
@@ -217,6 +242,9 @@ const ExamPaper:React.FC = (props) =>{
         <Container fluid={true}>
             <Navigationbar/>
             {/*<Button>{qnumber}</Button>*/}
+            <Row className="justify-content-center bg-light-grey pt-3" >
+                <Col xs={8}><h1>{courseCodeFromLoc} - exam</h1></Col>
+            </Row>
             <Row className="justify-content-center bg-light-grey" >
                 <Col xs={8}>
                     <Row className="justify-content-md-end ">
