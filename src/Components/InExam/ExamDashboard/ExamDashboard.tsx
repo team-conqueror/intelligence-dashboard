@@ -61,16 +61,7 @@ const ExamDashboard:React.FC = () => {
             <Row className="justify-content-center">
                 <Col s={12} md={8}>
                     <h2 className="p-3 text-start">All Exams</h2>
-                    <Row className="justify-content-start">
-                        <Col xs={2} className="align-content-start p-0 m-0">
-                            <Button variant="light m-3"
-                                onClick={() => getStateArray()}
-                            >
-                                <Icon.PlusCircle/>
-                                {" "}Add Exam
-                            </Button>
-                        </Col>
-                    </Row>
+
                     <Row>
                         {renderExamBtns()}
 

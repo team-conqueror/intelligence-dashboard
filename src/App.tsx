@@ -10,6 +10,7 @@ import ExamPaper from "./Components/InExam/ExamPaper";
 import ExamResultComponent from "./Components/ExamResult/ExamResultComponent";
 import AddExamHome, {IExam} from "./Components/InExam/AddExam/AddExamHome";
 import ExamDashboardTeacher from "./Components/InExam/ExamDashboard/ExamDashboardTeacher";
+import LoadingScreen from "./Components/Loader/LoadingScreen";
 
 function App() {
     const testFunc = (hello:number) => {
@@ -25,6 +26,8 @@ function App() {
                 <Route path="/exampaper" element={<ExamPaper/>}/>
                 <Route path="/examresult" element={<ExamResultComponent/>}/>
                 <Route path="/addexam" element={<AddExamHome testFunction={testFunc}/>} />
+                <Route path="/loading" element={<LoadingScreen/>}/>
+
             </Routes>
         </BrowserRouter>
     );

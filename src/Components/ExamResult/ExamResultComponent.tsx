@@ -8,11 +8,13 @@ import ExamMiddleArea from "./ExamMiddleArea";
 import ExamResultRightArea from "./ExamResultRightArea";
 import {SAMPLE_DATA} from "../../Repository/constants";
 import {useLocation} from "react-router-dom";
+import LoadingScreen from "../Loader/LoadingScreen";
 
 const ExamResultComponent:React.FC = () => {
 
     const location = useLocation();
     const studentIdFromLoc = location.state? location.state.studentId : SAMPLE_DATA.STUDENT_ID;
+    const [loading, setLoading] = useState<boolean>(true);
 
     const [students, setStudents] = useState<any[]>([]);
     const [studentName, setStudentName] = useState<string>("");
@@ -30,6 +32,10 @@ const ExamResultComponent:React.FC = () => {
                 setIndexNumber(response.data.studentNumber);
                 setAcademicYear(response.data.academicYear);
                 setStudentId(response.data._id);
+
+                setTimeout(()=>{
+                    setLoading(false);
+                }, 2000)
             })
             .catch((error) => {
                 console.log(error);
@@ -49,34 +55,42 @@ const ExamResultComponent:React.FC = () => {
         return studentIdFromLoc;
     }
 
+    const renderView = () => {
+        if(loading){
+            return <LoadingScreen/>
+        }else{
+            return <Container fluid={true} className="bg-light-grey">
+                <Navigationbar/>
+                <hr className="m-0 p-0"/>
+                <Row>
+                    <Col xs={12} className="pt-4 pb-4 mb-5 bg-light">
+                        <SearchArea/>
+                    </Col>
+                </Row>
+                <Row>
+                    <Col xs={3}>
+                        <ExamResultLeftArea/>
+                        <Row className="justify-content-center">
+                            <Col xs={6}>
+                                <Button>Blog</Button>
+                            </Col>
+                        </Row>
+                    </Col>
+                    <Col xs={6}>
+                        <ExamMiddleArea id={renderStudentID()}/>
+                    </Col>
+                    <Col xs={3}>
+                        <ExamResultRightArea academicYear={renderStudentYear()}
+                                             indexNumber={renderStudentIndex()}
+                                             name={renderStudentName()}/>
+                    </Col>
+                </Row>
+            </Container>
+        }
+    }
+
     return(
-        <Container fluid={true} className="bg-light-grey">
-            <Navigationbar/>
-            <hr className="m-0 p-0"/>
-            <Row>
-                <Col xs={12} className="pt-4 pb-4 mb-5 bg-light">
-                    <SearchArea/>
-                </Col>
-            </Row>
-            <Row>
-                <Col xs={3}>
-                    <ExamResultLeftArea/>
-                    <Row className="justify-content-center">
-                        <Col xs={6}>
-                            <Button>Blog</Button>
-                        </Col>
-                    </Row>
-                </Col>
-                <Col xs={6}>
-                    <ExamMiddleArea id={renderStudentID()}/>
-                </Col>
-                <Col xs={3}>
-                    <ExamResultRightArea academicYear={renderStudentYear()}
-                                         indexNumber={renderStudentIndex()}
-                                         name={renderStudentName()}/>
-                </Col>
-            </Row>
-        </Container>
+        renderView()
     )
 }
 

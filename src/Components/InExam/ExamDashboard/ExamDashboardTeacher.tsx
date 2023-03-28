@@ -7,8 +7,11 @@ import axios from "axios";
 import {IExamPaperType} from "../../../Types/ExamPaperType";
 import {IExamPaper} from "../../../Types/Questions";
 import ExamButtonTeacher from "./ExamButtonTeacher";
+import {useLocation, useNavigate} from "react-router-dom";
 
 const ExamDashboardTeacher:React.FC = () => {
+    const navigate = useNavigate();
+
     const [allExamsServer, setAllExamsServer] = useState<IExamPaper[]>([]);
 
     useEffect(() => {
@@ -35,7 +38,7 @@ const ExamDashboardTeacher:React.FC = () => {
     }
 
     const getStateArray = () => {
-        return (console.log(allExamsServer));
+        navigate('/addexam');
     }
     const renderExamBtns = () => {
         return(

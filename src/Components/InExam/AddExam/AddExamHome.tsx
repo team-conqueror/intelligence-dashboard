@@ -1,5 +1,5 @@
-import React, {useState} from "react";
-import {Button, Card, Col, Container, Row} from "react-bootstrap";
+import React, {useEffect, useState} from "react";
+import {Button, Card, Col, Container, Row, Toast} from "react-bootstrap";
 import Navigationbar from "../../Common/Navigationbar";
 import * as Icon from "react-bootstrap-icons";
 import {useForm, Controller} from "react-hook-form";
@@ -8,6 +8,7 @@ import { Input as AntdInput } from "antd";
 import AddMCQQuestion, {IMcqQuestion} from "./AddMCQQuestion";
 import {IExamPaperType, IServerExamPaper, IServerSingleQuestion} from "../../../Types/ExamPaperType";
 import axios from 'axios';
+import LoadingScreen from "../../Loader/LoadingScreen";
 
 export type IExam = {
     testFunction: (hello:number) => void
@@ -16,6 +17,16 @@ export type IExam = {
 const AddExamHome:React.FC<IExam> = (props) => {
 
     const [questionsToAdd, setQuestionsToAdd] = useState<IServerSingleQuestion[]>([]);
+    const [loading, setLoading] = useState<boolean>(true);
+    useEffect(()=>{
+        const timeoutId = setTimeout(() => {
+            setLoading(false);
+        }, 2000);
+
+        return () => {
+            clearTimeout(timeoutId);
+        };
+    },[])
 
     const examPaper:IExamPaperType = {
         subjectName: "",
@@ -48,6 +59,8 @@ const AddExamHome:React.FC<IExam> = (props) => {
     const[serverExamPaper, setServerExamPaper] = useState<IServerExamPaper>();
     const[serverQuestion, setServerQuestions] = useState<IServerSingleQuestion[]>([]);
     const[numberOfQuestions, setNumberOfQuestions] = useState(0);
+
+    const[showNotification, setShowNotification] = useState<boolean>(false);
 
     const addItemsToServerArray = (paper:IServerExamPaper) => {
         setServerExamPaper(tempPaper);
@@ -86,6 +99,7 @@ const AddExamHome:React.FC<IExam> = (props) => {
         axios.post('http://44.203.182.193:8080/addpaper', tempPaper,{headers})
             .then(res=>{
                 console.log(res.data);
+                setShowNotification(true);
             })
             .catch(err => {
                 console.error(err.response.data);
@@ -118,117 +132,141 @@ const AddExamHome:React.FC<IExam> = (props) => {
         console.log(questionsToAdd);
     }
 
+    const renderView = () => {
+        if(loading){
+            return <LoadingScreen/>
+        }else{
+            return <Container fluid={true} className="bg-purple-half p-0" >
+                <Navigationbar/>
+                <Row className="justify-content-center m-0">
+                    <Col xs={12} sm={8}>
+                        <Row className="justify-content-center">
+                            <Col xs={12} className="mb-4 mt-5">
+                                <Button variant="outline-light" >
+                                    <Icon.CaretLeftFill/>
+                                    {" "}All Exams
+                                </Button>
+                            </Col>
+                            <Col xs={12}>
+
+                                <Card className="p-5 shadow-lg">
+                                    <form onSubmit={handleSubmit(onSubmit)} >
+                                        <Row>
+                                            <Col xs={6}>
+                                                <Row>
+                                                    <Col xs={12} className="pt-1">
+                                                        <label>Subject Name</label>
+                                                    </Col>
+                                                    <Col xs={12}>
+                                                        <Controller
+                                                            render={({ field }) => <Input {...field} />}
+                                                            name="subjectName"
+                                                            control={control}
+                                                            defaultValue=""
+                                                        />
+                                                    </Col>
+                                                    <Col xs={12} className="pt-2" >
+                                                        <label>Teacher Name</label>
+                                                    </Col>
+                                                    <Col xs={12}>
+                                                        <Controller
+                                                            render={({ field }) => <Input {...field} />}
+                                                            name="teacher"
+                                                            control={control}
+                                                            defaultValue=""
+                                                        />
+                                                    </Col>
+                                                    <Col xs={12} className="pt-2">
+                                                        <label>Time Duration</label>
+                                                    </Col>
+                                                    <Col xs={12}>
+                                                        <Controller
+                                                            render={({ field }) => <Input {...field} />}
+                                                            name="timeDuration"
+                                                            control={control}
+                                                            defaultValue=""
+                                                        />
+                                                    </Col>
+
+                                                </Row>
+
+
+                                            </Col>
+                                            <Col xs={6}>
+                                                <Row>
+                                                    <Col xs={12} className="pt-1">
+                                                        <label>Course Code</label>
+                                                    </Col>
+                                                    <Col xs={12}>
+                                                        <Controller
+                                                            render={({ field }) => <Input {...field} />}
+                                                            name="courseCode"
+                                                            control={control}
+                                                            defaultValue=""
+                                                        />
+                                                    </Col>
+                                                    <Col xs={12} className="pt-2" >
+                                                        <label>Date and Time</label>
+                                                    </Col>
+                                                    <Col xs={12}>
+                                                        <Controller
+                                                            render={({ field }) => <Input {...field} />}
+                                                            name="dateAndTime"
+                                                            control={control}
+                                                            defaultValue=""
+                                                        />
+                                                    </Col>
+                                                    <Col xs={12} className="pt-2">
+                                                        <label>Instructions</label>
+                                                    </Col>
+                                                    <Col xs={12}>
+                                                        <Controller
+                                                            render={({ field }) => <Input {...field} />}
+                                                            name="instructions"
+                                                            control={control}
+                                                            defaultValue=""
+                                                        />
+                                                    </Col>
+
+                                                </Row>
+                                            </Col>
+                                            {errors.exampleRequired && <span>This field is required</span>}
+                                            <h6 className="mt-4">Number of Questions added: {numberOfQuestions}</h6>
+
+                                            <AddMCQQuestion addQuestion={AddAQuestion}/>
+                                            <Col xs={12} className={"pt-3"}>
+                                                <Toast onClose={() => setShowNotification(false)} show={showNotification} delay={4000} autohide>
+                                                    <Toast.Header>
+                                                        <img
+                                                            src="holder.js/20x20?text=%20"
+                                                            className="rounded me-2"
+                                                            alt=""
+                                                        />
+                                                        <strong className="me-auto">Bootstrap</strong>
+                                                        <small>Just now</small>
+                                                    </Toast.Header>
+                                                    <Toast.Body>You have added the paper</Toast.Body>
+                                                </Toast>
+                                            </Col>
+
+
+                                            <AntdInput type="submit" className="mt-5 w-25" value="Add paper"/>
+                                        </Row>
+
+                                    </form>
+
+                                </Card>
+
+                            </Col>
+                        </Row>
+                    </Col>
+                </Row>
+            </Container>
+        }
+    }
+
     return(
-        <Container fluid={true} className="bg-purple-half p-0" >
-            <Navigationbar/>
-            <Row className="justify-content-center m-0">
-                <Col xs={12} sm={8}>
-                    <Row className="justify-content-center">
-                        <Col xs={12} className="mb-4 mt-5">
-                            <Button variant="outline-light" >
-                                <Icon.CaretLeftFill/>
-                                {" "}All Exams
-                            </Button>
-                        </Col>
-                        <Col xs={12}>
-                            <Card className="p-5 shadow-lg">
-                                <form onSubmit={handleSubmit(onSubmit)} >
-                                    <Row>
-                                        <Col xs={6}>
-                                            <Row>
-                                                <Col xs={12} className="pt-1">
-                                                    <label>Subject Name</label>
-                                                </Col>
-                                                <Col xs={12}>
-                                                    <Controller
-                                                        render={({ field }) => <Input {...field} />}
-                                                        name="subjectName"
-                                                        control={control}
-                                                        defaultValue=""
-                                                    />
-                                                </Col>
-                                                <Col xs={12} className="pt-2" >
-                                                    <label>Teacher Name</label>
-                                                </Col>
-                                                <Col xs={12}>
-                                                    <Controller
-                                                        render={({ field }) => <Input {...field} />}
-                                                        name="teacher"
-                                                        control={control}
-                                                        defaultValue=""
-                                                    />
-                                                </Col>
-                                                <Col xs={12} className="pt-2">
-                                                    <label>Time Duration</label>
-                                                </Col>
-                                                <Col xs={12}>
-                                                    <Controller
-                                                        render={({ field }) => <Input {...field} />}
-                                                        name="timeDuration"
-                                                        control={control}
-                                                        defaultValue=""
-                                                    />
-                                                </Col>
-
-                                            </Row>
-
-
-                                        </Col>
-                                        <Col xs={6}>
-                                            <Row>
-                                                <Col xs={12} className="pt-1">
-                                                    <label>Course Code</label>
-                                                </Col>
-                                                <Col xs={12}>
-                                                    <Controller
-                                                        render={({ field }) => <Input {...field} />}
-                                                        name="courseCode"
-                                                        control={control}
-                                                        defaultValue=""
-                                                    />
-                                                </Col>
-                                                <Col xs={12} className="pt-2" >
-                                                    <label>Date and Time</label>
-                                                </Col>
-                                                <Col xs={12}>
-                                                    <Controller
-                                                        render={({ field }) => <Input {...field} />}
-                                                        name="dateAndTime"
-                                                        control={control}
-                                                        defaultValue=""
-                                                    />
-                                                </Col>
-                                                <Col xs={12} className="pt-2">
-                                                    <label>Instructions</label>
-                                                </Col>
-                                                <Col xs={12}>
-                                                    <Controller
-                                                        render={({ field }) => <Input {...field} />}
-                                                        name="instructions"
-                                                        control={control}
-                                                        defaultValue=""
-                                                    />
-                                                </Col>
-
-                                            </Row>
-                                        </Col>
-                                        {errors.exampleRequired && <span>This field is required</span>}
-                                        <h6 className="mt-4">Number of Questions added: {numberOfQuestions}</h6>
-
-                                        <AddMCQQuestion addQuestion={AddAQuestion}/>
-
-                                        <AntdInput type="submit" className="mt-5 w-25" value="Add paper"/>
-                                    </Row>
-
-                                </form>
-
-                            </Card>
-
-                        </Col>
-                    </Row>
-                </Col>
-            </Row>
-        </Container>
+        renderView()
     )
 }
 
