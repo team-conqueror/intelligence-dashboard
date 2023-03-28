@@ -6,8 +6,9 @@ import Navigationbar from "../../Common/Navigationbar";
 import axios from "axios";
 import {IExamPaperType} from "../../../Types/ExamPaperType";
 import {IExamPaper} from "../../../Types/Questions";
+import ExamButtonTeacher from "./ExamButtonTeacher";
 
-const ExamDashboard:React.FC = () => {
+const ExamDashboardTeacher:React.FC = () => {
     const [allExamsServer, setAllExamsServer] = useState<IExamPaper[]>([]);
 
     useEffect(() => {
@@ -41,14 +42,14 @@ const ExamDashboard:React.FC = () => {
             allExamsServer.map(singleExam => {
                 return(
                     <Col xs={4} className="pb-2">
-                        <ExamButton
+                        <ExamButtonTeacher
                             courseCode={singleExam.courseCode}
                             examDate={""}
                             teacherName={""}
                             timeRemaining={""}
                             buttonPress={()=>{}}/>
                     </Col>
-                    )
+                )
 
             })
         )
@@ -64,7 +65,7 @@ const ExamDashboard:React.FC = () => {
                     <Row className="justify-content-start">
                         <Col xs={2} className="align-content-start p-0 m-0">
                             <Button variant="light m-3"
-                                onClick={() => getStateArray()}
+                                    onClick={() => getStateArray()}
                             >
                                 <Icon.PlusCircle/>
                                 {" "}Add Exam
@@ -164,4 +165,4 @@ const ExamDashboard:React.FC = () => {
     )
 }
 
-export default ExamDashboard;
+export default ExamDashboardTeacher;

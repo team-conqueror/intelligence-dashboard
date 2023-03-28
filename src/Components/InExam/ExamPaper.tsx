@@ -59,7 +59,7 @@ const ExamPaper:React.FC = (props) =>{
     const [papersubmit, setPaperSubmit] = useState<boolean>(false);
     useEffect(() => {
         console.log("course code from loc: "+ courseCodeFromLoc);
-        axios.get("http://localhost:8080/getPaperCourseCode/"+courseCodeFromLoc)
+        axios.get("http://44.203.182.193:8080/getPaperCourseCode/"+courseCodeFromLoc)
             .then((response) => {
                 setExamPaper(response.data);
             })
@@ -89,7 +89,7 @@ const ExamPaper:React.FC = (props) =>{
             }
         }
         console.log("grade is " + (grade && getGrade(grade)));
-        axios.get("http://localhost:8080/getStudent/" + SAMPLE_DATA.STUDENT_ID)
+        axios.get("http://44.203.182.193:8080/getStudent/" + SAMPLE_DATA.STUDENT_ID)
             .then((response) => {
                 console.log(response.data);
                 initialStudent.studentNumber = response.data.studentNumber;
@@ -105,7 +105,7 @@ const ExamPaper:React.FC = (props) =>{
                 })
                 console.log("this is new student " );
                 if(papersubmit){
-                    axios.put("http://localhost:8080/updateStudent/" + SAMPLE_DATA.STUDENT_ID, initialStudent)
+                    axios.put("http://44.203.182.193:8080/updateStudent/" + SAMPLE_DATA.STUDENT_ID, initialStudent)
                         .then((response) => {
                             console.log(response.data);
                         })

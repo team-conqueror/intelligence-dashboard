@@ -6,6 +6,7 @@ import {Button, Col, Container, Row} from "react-bootstrap";
 import ExamResultLeftArea from "./ExamResultLeftArea";
 import ExamMiddleArea from "./ExamMiddleArea";
 import ExamResultRightArea from "./ExamResultRightArea";
+import {SAMPLE_DATA} from "../../Repository/constants";
 
 const ExamResultComponent:React.FC = () => {
 
@@ -18,7 +19,7 @@ const ExamResultComponent:React.FC = () => {
     const sampleId = "642001051d8c24f6b09297f9";
 
     useEffect(() => {
-        axios.get("http://localhost:8080/getStudent/" + sampleId)
+        axios.get("http://44.203.182.193:8080/getStudent/" + SAMPLE_DATA.STUDENT_ID)
             .then((response) => {
                 setStudents(response.data);
                 setStudentName(response.data.name);

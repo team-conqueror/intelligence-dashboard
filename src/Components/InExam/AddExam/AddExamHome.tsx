@@ -83,7 +83,7 @@ const AddExamHome:React.FC<IExam> = (props) => {
             questions: questionsToAdd
         }
         addItemsToServerArray(tempPaper);
-        axios.post('http://localhost:8080/addpaper', tempPaper,{headers})
+        axios.post('http://44.203.182.193:8080/addpaper', tempPaper,{headers})
             .then(res=>{
                 console.log(res.data);
             })

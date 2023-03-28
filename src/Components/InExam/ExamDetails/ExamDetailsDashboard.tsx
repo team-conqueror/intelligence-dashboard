@@ -12,6 +12,7 @@ import {eExamDetailsIcons} from "../../../Types/ExamDetailsDashboardType";
 import axios from "axios";
 import {SAMPLE_DATA} from "../../../Repository/constants";
 import {studentsInExamType} from "../../../Types/ExamStudentDetailsType";
+import {useLocation} from "react-router-dom";
 
 const ExamDetailsDashboard:React.FC = () => {
 
@@ -27,8 +28,11 @@ const ExamDetailsDashboard:React.FC = () => {
 
     const [followingStudents, setFollowingStudents] = useState<studentsInExamType[]>([]);
 
+    const location = useLocation();
+    const courseCodeFromLoc = location.state ? location.state.courseCodec : SAMPLE_DATA.COURSE_CODE;
+
     useEffect(() => {
-        axios.get("http://localhost:8080/getStudentsCc/"+ SAMPLE_DATA.COURSE_CODE)
+        axios.get("http://44.203.182.193:8080/getStudentsCc/"+ courseCodeFromLoc)
             .then((response) => {
                 console.log(response.data);
                 setTotalStudents(response.data.length);
@@ -40,7 +44,7 @@ const ExamDetailsDashboard:React.FC = () => {
         let studentMark:string = "";
         singleStudent.subjectsEnrolled.map(subject => {
             console.log(subject.courseCode);
-            if(subject.courseCode == SAMPLE_DATA.COURSE_CODE){
+            if(subject.courseCode == courseCodeFromLoc){
                 studentMark = subject.marks;
             }
         })
@@ -49,7 +53,7 @@ const ExamDetailsDashboard:React.FC = () => {
     const renderStatus = (singleStudent: studentsInExamType): string => {
         let studentStatus: string = "";
         singleStudent.subjectsEnrolled.map(subject => {
-            if(subject.courseCode == SAMPLE_DATA.COURSE_CODE){
+            if(subject.courseCode == courseCodeFromLoc){
                 studentStatus = subject.status;
             }
         })
@@ -102,7 +106,7 @@ const ExamDetailsDashboard:React.FC = () => {
                                             Exam: October 2021
                                         </Card.Title>
                                         <Card.Text className="text-start">
-                                            course: SENG 11213 - Fundamentals of Computing<br/>
+                                            course: {courseCodeFromLoc} <br/>
                                             50 MCQ based questions for all exam
                                         </Card.Text>
                                     </Col>
