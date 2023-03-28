@@ -7,8 +7,12 @@ import ExamResultLeftArea from "./ExamResultLeftArea";
 import ExamMiddleArea from "./ExamMiddleArea";
 import ExamResultRightArea from "./ExamResultRightArea";
 import {SAMPLE_DATA} from "../../Repository/constants";
+import {useLocation} from "react-router-dom";
 
 const ExamResultComponent:React.FC = () => {
+
+    const location = useLocation();
+    const studentIdFromLoc = location.state? location.state.studentId : SAMPLE_DATA.STUDENT_ID;
 
     const [students, setStudents] = useState<any[]>([]);
     const [studentName, setStudentName] = useState<string>("");
@@ -19,7 +23,7 @@ const ExamResultComponent:React.FC = () => {
     const sampleId = "642001051d8c24f6b09297f9";
 
     useEffect(() => {
-        axios.get("http://44.203.182.193:8080/getStudent/" + SAMPLE_DATA.STUDENT_ID)
+        axios.get("http://44.203.182.193:8080/getStudent/" + studentIdFromLoc)
             .then((response) => {
                 setStudents(response.data);
                 setStudentName(response.data.name);
@@ -42,7 +46,7 @@ const ExamResultComponent:React.FC = () => {
         return academicYear;
     }
     const renderStudentID = () => {
-        return sampleId;
+        return studentIdFromLoc;
     }
 
     return(

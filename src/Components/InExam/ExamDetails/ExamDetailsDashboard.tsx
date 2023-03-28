@@ -29,6 +29,7 @@ const ExamDetailsDashboard:React.FC = () => {
     const [followingStudents, setFollowingStudents] = useState<studentsInExamType[]>([]);
 
     const location = useLocation();
+    //this is where the student Id was called from state
     const courseCodeFromLoc = location.state ? location.state.courseCodec : SAMPLE_DATA.COURSE_CODE;
 
     useEffect(() => {

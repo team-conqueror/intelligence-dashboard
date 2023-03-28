@@ -3,6 +3,7 @@ import {Button, Card, Col, Row} from "react-bootstrap";
 import {Avatar, Stack} from "@mui/material";
 import * as Icon from "react-bootstrap-icons";
 import {useNavigate} from "react-router-dom";
+import {SAMPLE_DATA} from "../../../Repository/constants";
 
 type examButtonType = {
     courseCode: string
@@ -15,9 +16,13 @@ type examButtonType = {
 const ExamButton:FC<examButtonType> = (props) => {
     const navigate = useNavigate();
 
+    //get id from token
     const handleClick = () => {
         console.log('Button click ' + props.courseCode);
-        navigate('/exampaper', { state: { courseCodec: props.courseCode } });
+        navigate('/exampaper', { state: {
+                courseCodec: props.courseCode,
+                studentId: SAMPLE_DATA.STUDENT_ID
+        } });
     }
 
     return(

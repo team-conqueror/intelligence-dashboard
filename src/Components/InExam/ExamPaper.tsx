@@ -21,7 +21,8 @@ const ExamPaper:React.FC = (props) =>{
     const testInt:number[] = [];
 
     const location = useLocation();
-    const courseCodeFromLoc = location.state.courseCodec;
+    const courseCodeFromLoc = location.state? location.state.courseCodec : SAMPLE_DATA.COURSE_CODE;
+    const studentIdFromLoc = location.state? location.state.studentId : SAMPLE_DATA.STUDENT_ID;
     let initialPaper: IExamPaper = {
         courseCode: "",
         subjectName: "",
@@ -89,7 +90,7 @@ const ExamPaper:React.FC = (props) =>{
             }
         }
         console.log("grade is " + (grade && getGrade(grade)));
-        axios.get("http://44.203.182.193:8080/getStudent/" + SAMPLE_DATA.STUDENT_ID)
+        axios.get("http://44.203.182.193:8080/getStudent/" + studentIdFromLoc)
             .then((response) => {
                 console.log(response.data);
                 initialStudent.studentNumber = response.data.studentNumber;
@@ -105,7 +106,7 @@ const ExamPaper:React.FC = (props) =>{
                 })
                 console.log("this is new student " );
                 if(papersubmit){
-                    axios.put("http://44.203.182.193:8080/updateStudent/" + SAMPLE_DATA.STUDENT_ID, initialStudent)
+                    axios.put("http://44.203.182.193:8080/updateStudent/" + studentIdFromLoc, initialStudent)
                         .then((response) => {
                             console.log(response.data);
                         })
