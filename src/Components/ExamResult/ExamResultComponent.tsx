@@ -13,7 +13,35 @@ import LoadingScreen from "../Loader/LoadingScreen";
 const ExamResultComponent:React.FC = () => {
 
     const location = useLocation();
-    const studentIdFromLoc = location.state? location.state.studentId : SAMPLE_DATA.STUDENT_ID;
+    let studentIdFromLoc = location.state? location.state.studentId : SAMPLE_DATA.STUDENT_ID;
+
+    const cookies = document.cookie;
+    const cookiesArray = cookies.split('; ');
+
+    let token = null;
+    cookiesArray.forEach(cookie => {
+        const [name, value] = cookie.split('=');
+        if (name === 'token') {
+            token = value;
+        }
+    });
+
+    fetch(`http://3.84.20.224:5000/userDtl`,
+        {
+            method: 'POST',
+            body: JSON.stringify({token}),
+            headers: {'Content-Type': 'application/json'}
+        })
+        .then(async (response) => {
+            const rs = await response.json()
+            console.log(rs.user.user.name);
+            studentIdFromLoc = rs.user.user.name
+        })
+        .catch((error) => {
+            console.log(error);
+        })
+
+
     const [loading, setLoading] = useState<boolean>(true);
 
     const [students, setStudents] = useState<any[]>([]);
@@ -25,7 +53,7 @@ const ExamResultComponent:React.FC = () => {
     const sampleId = "642001051d8c24f6b09297f9";
 
     useEffect(() => {
-        axios.get("http://44.203.182.193:8080/getStudent/" + studentIdFromLoc)
+        axios.get("http://localhost:8080/getStudentsRr/" + studentIdFromLoc)
             .then((response) => {
                 setStudents(response.data);
                 setStudentName(response.data.name);

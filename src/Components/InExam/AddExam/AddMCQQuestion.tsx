@@ -1,11 +1,6 @@
 import React, {useState} from "react";
-import {Button, Card, Col, Row,Form} from "react-bootstrap";
-import {useForm, Controller} from "react-hook-form";
-import { Checkbox, Input } from "@material-ui/core";
-import Select from "react-select";
-import * as Icon from "react-bootstrap-icons";
-
-import { Input as AntdInput } from "antd";
+import {Button, Card, Col, Form, Row} from "react-bootstrap";
+import {useForm} from "react-hook-form";
 
 type ISingleMcqQuestion = {
     addQuestion : (question:IMcqQuestion) => void

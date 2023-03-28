@@ -1,12 +1,9 @@
-import React, {useState, useEffect} from "react";
+import React, {useEffect, useState} from "react";
 import {Button, Card, Col, Container, Row} from "react-bootstrap";
-import {FormControl, FormControlLabel, FormLabel, Radio, RadioGroup} from "@mui/material";
-import {examQuestionsSample} from "../../Repository/ExamQuestions/ExamQuestionsSample";
 import Navigationbar from "../Common/Navigationbar";
 import ExamQuestionButtonComponent from "./ExamPaper/ExamQuestionButtonComponent";
 import {eQuestShadow} from "../../Types/ExamQuestionButtonType";
 import {Controller, useForm} from "react-hook-form";
-import {Input} from "@material-ui/core";
 import Select from "react-select";
 import {Input as AntdInput} from "antd";
 import {IExamPaper, IQuestions, IStudentAnswers} from "../../Types/Questions";
