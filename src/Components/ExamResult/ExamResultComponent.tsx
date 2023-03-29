@@ -13,7 +13,8 @@ import LoadingScreen from "../Loader/LoadingScreen";
 const ExamResultComponent:React.FC = () => {
 
     const location = useLocation();
-    let studentIdFromLoc = location.state? location.state.studentId : SAMPLE_DATA.STUDENT_ID;
+    //let studentIdFromLoc = location.state? location.state.studentId : SAMPLE_DATA.STUDENT_ID;
+    const [studentIdFromLoc, setStudentIdFromLoc] = useState<string>("");
 
     const cookies = document.cookie;
     const cookiesArray = cookies.split('; ');
@@ -34,12 +35,14 @@ const ExamResultComponent:React.FC = () => {
         })
         .then(async (response) => {
             const rs = await response.json()
-            console.log(rs.user.user.name);
-            studentIdFromLoc = rs.user.user.name;
+            //console.log(rs.user.user.name);
+            setStudentIdFromLoc(rs.user.user.name);
+            //studentIdFromLoc = rs.user.user.name;
         })
         .catch((error) => {
-            console.log(error);
-            studentIdFromLoc = SAMPLE_DATA.STUDENT_ID;
+            //console.log("Error" + error);
+            setStudentIdFromLoc(SAMPLE_DATA.STUDENT_ID);
+            //studentIdFromLoc = SAMPLE_DATA.STUDENT_ID;
         })
 
 
@@ -53,7 +56,10 @@ const ExamResultComponent:React.FC = () => {
 
 
     useEffect(() => {
-        axios.get("http://localhost:8080/getStudentsRr/" + studentIdFromLoc)
+
+        const tempStdName = studentIdFromLoc == ""? SAMPLE_DATA.STUDENT_ID: studentIdFromLoc;
+        console.log(tempStdName);
+        axios.get("http://localhost:8080/getStudentsRr/" + tempStdName)
             .then((response) => {
                 console.log(response.data);
                 setStudents(response.data);
@@ -67,9 +73,10 @@ const ExamResultComponent:React.FC = () => {
                 }, 2000)
             })
             .catch((error) => {
-                console.log(error);
+                //console.log(error);
+                setLoading(false);
             })
-    }, []);
+    }, [studentIdFromLoc]);
     console.log(studentName);
     const renderStudentName = () => {
         return studentName;

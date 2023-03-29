@@ -4,14 +4,10 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="4b1b1b8c-8b63-4829-8201-c16ea41ce466" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/.idea/vcs.xml" afterDir="false" />
+    <list default="true" id="4b1b1b8c-8b63-4829-8201-c16ea41ce466" name="Changes" comment="changed exam result settings">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Components/ExamResult/ExamMiddleArea.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/Components/ExamResult/ExamMiddleArea.tsx" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/Components/ExamResult/ExamResultComponent.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/Components/ExamResult/ExamResultComponent.tsx" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/Components/InExam/ExamDashboard/ExamButton.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/Components/InExam/ExamDashboard/ExamButton.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Components/InExam/ExamPaper.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/Components/InExam/ExamPaper.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Repository/constants.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/Repository/constants.ts" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -51,11 +47,23 @@
       <option name="number" value="Default" />
       <option name="presentableId" value="Default" />
       <updated>1680096682248</updated>
-      <workItem from="1680096685427" duration="3053000" />
+      <workItem from="1680096685427" duration="6307000" />
     </task>
+    <task id="LOCAL-00001" summary="changed exam result settings">
+      <created>1680100164053</created>
+      <option name="number" value="00001" />
+      <option name="presentableId" value="LOCAL-00001" />
+      <option name="project" value="LOCAL" />
+      <updated>1680100164053</updated>
+    </task>
+    <option name="localTasksCounter" value="2" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
     <option name="version" value="3" />
+  </component>
+  <component name="VcsManagerConfiguration">
+    <MESSAGE value="changed exam result settings" />
+    <option name="LAST_COMMIT_MESSAGE" value="changed exam result settings" />
   </component>
 </project>

@@ -17,10 +17,8 @@ type examButtonType = {
 const ExamButton:FC<examButtonType> = (props) => {
     const navigate = useNavigate();
 
-    const [studentIdFromLoc, setStudentIdFromLoc] = useState<string>(SAMPLE_DATA.STUDENT_ID);
-    useEffect(()=>{
-        console.log(studentIdFromLoc);
-    },[studentIdFromLoc])
+    const [studentIdFromLoc, setStudentIdFromLoc] = useState<string>("");
+
 
     const cookies = document.cookie;
     const cookiesArray = cookies.split('; ');
@@ -41,24 +39,25 @@ const ExamButton:FC<examButtonType> = (props) => {
         })
         .then(async (response) => {
             const rs = await response.json()
-            console.log(rs.user.user.name);
-            setStudentIdFromLoc(rs.use.user.name);
+            setStudentIdFromLoc(rs.user.user.name);
         })
         .catch((error) => {
             console.log(" cannot get cookies"+error);
-            setStudentIdFromLoc(SAMPLE_DATA.STUDENT_ID);
+            //setStudentIdFromLoc(SAMPLE_DATA.STUDENT_ID);
         })
 
-    console.log(studentIdFromLoc);
+
 
 
 
     //get id from token
     const handleClick = () => {
-        console.log('Button click ' + props.courseCode);
-        axios.get("http://localhost:8080/getStudentsRr/" + studentIdFromLoc)
+
+        console.log('Button click ' + studentIdFromLoc);
+        const tempStdName = studentIdFromLoc == "" ? SAMPLE_DATA.STUDENT_ID: studentIdFromLoc;
+        axios.get("http://localhost:8080/getStudentsRr/" + tempStdName)
             .then((response) => {
-                console.log(response.data[0]?._id);
+                console.log(response.data[0]?.name);
                 navigate('/exampaper', { state: {
                         courseCodec: props.courseCode,
                         studentId: response.data[0]?._id
