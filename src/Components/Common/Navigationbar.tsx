@@ -46,12 +46,12 @@ const Navigationbar:React.FC = () => {
                 <Navbar.Collapse id="basic-navbar-nav">
                     <Nav className="ms-auto">
 
-                        <Nav.Link href="/">Home</Nav.Link>
+                        <Nav.Link href="http://home.scrutinizer.online/">Home</Nav.Link>
                         <Nav.Link href="#exampaper">About</Nav.Link>
                         <Nav.Link href="#examdetails">Contact</Nav.Link>
-                        <Nav.Link href="/Login" hidden={val2}>Login</Nav.Link>
+                        <Nav.Link href="http://home.scrutinizer.online/Login" hidden={val2}>Login</Nav.Link>
 
-                        <Nav.Link href="/Profile" hidden={val1}>
+                        <Nav.Link href="http://home.scrutinizer.online/Profile" hidden={val1}>
                             <Icon.PersonCircle className=" fs-5"/>{" "}
                             {(name)}
                         </Nav.Link>

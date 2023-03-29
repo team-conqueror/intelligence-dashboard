@@ -59,7 +59,7 @@ const ExamResultComponent:React.FC = () => {
 
         const tempStdName = studentIdFromLoc == ""? SAMPLE_DATA.STUDENT_ID: studentIdFromLoc;
         console.log(tempStdName);
-        axios.get("http://localhost:8080/getStudentsRr/" + tempStdName)
+        axios.get("http://44.203.182.193:8080/getStudentsRr/" + tempStdName)
             .then((response) => {
                 console.log(response.data);
                 setStudents(response.data);

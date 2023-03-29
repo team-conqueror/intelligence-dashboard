@@ -16,7 +16,7 @@ const ExamMiddleArea:React.FC<studentDetails> = (props) => {
     const [subjects, setSubjects] = useState<IResult[]>([]);
 
     useEffect(() => {
-        axios.get("http://localhost:8080/getStudentsRr/" + props.id)
+        axios.get("http://44.203.182.193:8080/getStudentsRr/" + props.id)
             .then((response) => {
                 setSubjects(response.data[0]?.subjectsEnrolled);
 

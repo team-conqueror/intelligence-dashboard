@@ -55,7 +55,7 @@ const ExamButton:FC<examButtonType> = (props) => {
 
         console.log('Button click ' + studentIdFromLoc);
         const tempStdName = studentIdFromLoc == "" ? SAMPLE_DATA.STUDENT_ID: studentIdFromLoc;
-        axios.get("http://localhost:8080/getStudentsRr/" + tempStdName)
+        axios.get("http://44.203.182.193:8080/getStudentsRr/" + tempStdName)
             .then((response) => {
                 console.log(response.data[0]?.name);
                 navigate('/exampaper', { state: {
