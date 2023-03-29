@@ -3,6 +3,7 @@ import axios from "axios";
 import {Col, Container, Row} from "react-bootstrap";
 import {IResult} from "../../Types/SingleResultType";
 import ExamResultSingle from "./ExamResultSingle";
+import {SAMPLE_DATA} from "../../Repository/constants";
 
 
 
@@ -15,12 +16,14 @@ const ExamMiddleArea:React.FC<studentDetails> = (props) => {
     const [subjects, setSubjects] = useState<IResult[]>([]);
 
     useEffect(() => {
-        axios.get("http://44.203.182.193:8080/getStudent/" + props.id.toString())
+        axios.get("http://localhost:8080/getStudentsRr/" + props.id)
             .then((response) => {
-                setSubjects(response.data.subjectsEnrolled);
+                setSubjects(response.data[0]?.subjectsEnrolled);
+
             })
             .catch((err) => {
                 console.error(err);
+                console.log("error error");
             })
     }, [])
 
@@ -31,7 +34,7 @@ const ExamMiddleArea:React.FC<studentDetails> = (props) => {
         })
     }*/
     const renderResults = () => {
-        return subjects.map((singleResult) => {
+        return subjects?.map((singleResult) => {
             return <ExamResultSingle
                 courseCode={singleResult.courseCode}
                 subjectName={singleResult.subName}

@@ -18,8 +18,10 @@ const ExamPaper:React.FC = (props) =>{
     const testInt:number[] = [];
 
     const location = useLocation();
+
     const courseCodeFromLoc = location.state? location.state.courseCodec : SAMPLE_DATA.COURSE_CODE;
     const studentIdFromLoc = location.state? location.state.studentId : SAMPLE_DATA.STUDENT_ID;
+
     let initialPaper: IExamPaper = {
         courseCode: "",
         subjectName: "",

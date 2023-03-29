@@ -1,4 +1,4 @@
 export const SAMPLE_DATA = {
-    STUDENT_ID: "6421f0a34403e91394ba6a40",
+    STUDENT_ID: "Neminda Piyasena",
     COURSE_CODE: "SENG 31243"
 }

@@ -35,10 +35,11 @@ const ExamResultComponent:React.FC = () => {
         .then(async (response) => {
             const rs = await response.json()
             console.log(rs.user.user.name);
-            studentIdFromLoc = rs.user.user.name
+            studentIdFromLoc = rs.user.user.name;
         })
         .catch((error) => {
             console.log(error);
+            studentIdFromLoc = SAMPLE_DATA.STUDENT_ID;
         })
 
 
@@ -50,16 +51,16 @@ const ExamResultComponent:React.FC = () => {
     const [academicYear, setAcademicYear] = useState<string>("");
     const [studentId, setStudentId] = useState<string>("");
 
-    const sampleId = "642001051d8c24f6b09297f9";
 
     useEffect(() => {
         axios.get("http://localhost:8080/getStudentsRr/" + studentIdFromLoc)
             .then((response) => {
+                console.log(response.data);
                 setStudents(response.data);
-                setStudentName(response.data.name);
-                setIndexNumber(response.data.studentNumber);
-                setAcademicYear(response.data.academicYear);
-                setStudentId(response.data._id);
+                setStudentName(response.data[0]?.name);
+                setIndexNumber(response.data[0]?.studentNumber);
+                setAcademicYear(response.data[0]?.academicYear);
+                setStudentId(response.data[0]?._id);
 
                 setTimeout(()=>{
                     setLoading(false);
@@ -69,7 +70,7 @@ const ExamResultComponent:React.FC = () => {
                 console.log(error);
             })
     }, []);
-
+    console.log(studentName);
     const renderStudentName = () => {
         return studentName;
     }
@@ -105,7 +106,7 @@ const ExamResultComponent:React.FC = () => {
                         </Row>
                     </Col>
                     <Col xs={6}>
-                        <ExamMiddleArea id={renderStudentID()}/>
+                        <ExamMiddleArea id={studentName}/>
                     </Col>
                     <Col xs={3}>
                         <ExamResultRightArea academicYear={renderStudentYear()}
