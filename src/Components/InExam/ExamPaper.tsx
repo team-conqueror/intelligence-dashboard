@@ -288,7 +288,7 @@ const ExamPaper:React.FC = (props) =>{
                                     </Card>
                                 </Col>
                                 <Col sm={12}>
-                                    <Button variant="primary mt-5" onClick={() => {window.open('http://conference.scrutinizer.online/')}}>Video Conference</Button>
+                                    <Button variant="primary mt-5">Video Conference</Button>
                                     <Button variant="danger mt-5"
                                             onClick={e => {
                                                 handleOnEndExam();
